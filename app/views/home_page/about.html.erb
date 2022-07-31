@@ -1,2 +1,6 @@
 <h1> you are logged in</h1>
-<%# <%=current_user.inspect%> %>
+<%#current_user.inspect%>
+<% if current_user.avatar.attached? %>
+    <%= image_tag current_user.avatar, :width=>150, :crop=>"fill" %>
+<% end %>
+

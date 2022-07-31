@@ -1,0 +1,11 @@
+development:
+  cloud_name: "dy2zty4c5"
+  api_key: "431148155554578"
+  api_secret: "IArPOHM6bguahMTMx1tPDUgdSIA"
+  secure: true
+
+production:
+  cloud_name: "dy2zty4c5"
+  api_key: "431148155554578"
+  api_secret: "IArPOHM6bguahMTMx1tPDUgdSIA"
+  secure: true

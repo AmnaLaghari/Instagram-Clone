@@ -2,7 +2,8 @@
 
 Rails.application.routes.draw do
   # root 'home_page#index'
-  get 'users/index'
+  # get 'users/index'
+  # get '/users', to: 'home_page#index'
   devise_for :users
 
   devise_scope :user do
