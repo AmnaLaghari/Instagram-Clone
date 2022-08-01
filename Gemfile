@@ -68,3 +68,7 @@ end
 gem 'cloudinary'
 gem 'devise'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+# Bootstrap
+gem 'bootstrap-sass', '~> 3.4.1'
+gem 'jquery-rails'
+# gem 'jquery-rails', '~> 4.5'
