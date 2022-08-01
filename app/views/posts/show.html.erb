@@ -1,2 +1,10 @@
-<h1>Posts#show</h1>
-<p>Find me in app/views/posts/show.html.erb</p>
+<p>
+  <%= @post.caption%>
+</p>
+
+<%= @post.inspect%>
+<% if @post.images.attached?%>
+  <% @post.images.each do |image|%>
+    <%= image_tag image , width:"200"%>
+  <%end%>
+<%end%>
