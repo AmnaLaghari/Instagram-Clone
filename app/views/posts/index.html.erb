@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
         <div class="col-4">
             <% if current_user.avatar.attached? %>
-                <%= image_tag current_user.avatar, :width=>200, :crop=>"fill" %>
+                <%= image_tag current_user.avatar, :width=>200, :crop=>"fill", class:"border border-dark rounded-circle"%>
             <% end %>
         </div>
         <div class="col-4">
@@ -12,23 +12,26 @@
             <h4><%= current_user.bio%></h4>
             <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "btn btn-secondary"%>
             <%= link_to 'Edit profile', edit_user_registration_path, class: "btn btn-secondary" %>
+            <%= link_to 'Add new post', new_post_path %>
         </div>
     </div>
-
-    <%= link_to 'Add new post', new_post_path %>
-
-    <% @posts.each do |post| %>
-      <%if post.user == current_user%>
-        <%= post.caption %>
-        <% if post.images.attached?%>
-        <% post.images.each do |image|%>
-        <%= image_tag image , width:"50"%>
-        <%end%>
-        <%end%>
-        <%= link_to 'Show', post %>
-        <%= link_to 'Edit', edit_post_path(post) %>
-        <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %>
-      </tr>
-      <%end%>
-    <% end %>
+    <div class="card mt-5">
+        <div class="card-body">
+            <% @posts.each do |post| %>
+            <%if post.user == current_user%>
+                <%= post.caption %>
+                <% if post.images.attached?%>
+                <% post.images.each do |image|%>
+                <%= image_tag image , width:"50"%>
+                <%end%>
+                <%end%>
+                <%= link_to 'Show', post, class:"btn btn-secondary"%>
+                <%= link_to 'Edit', edit_post_path(post), class:"btn btn-dark"%>
+                <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-secondary"%>
+                <br/>
+            <%end%>
+            <br>
+            <% end %>
+        </div>
+    </div>
 </div>

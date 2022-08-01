@@ -11,6 +11,8 @@ class PostsController < ApplicationController
   end
 
   def destroy
+    @friend.destroy
+    redirect_to friends_url, notice: "Friend was successfully destroyed."
   end
 
   def new
@@ -28,6 +30,11 @@ class PostsController < ApplicationController
   end
 
   def update
+    if @post.update(post_params)
+      redirect_to post_url(@post), notice: 'post was successfully created.'
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   private

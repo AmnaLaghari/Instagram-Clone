@@ -3,7 +3,7 @@
 </p>
 
 <%= @post.inspect%>
-<% if @post.images.attached?%>
+<% if @post.images.attached? %>
   <% @post.images.each do |image|%>
     <%= image_tag image , width:"200"%>
   <%end%>
