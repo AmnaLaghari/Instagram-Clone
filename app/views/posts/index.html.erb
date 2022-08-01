@@ -1,0 +1,18 @@
+
+<div class="container py-5 px-5 justify-content-md-center">
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <% if current_user.avatar.attached? %>
+                <%= image_tag current_user.avatar, :width=>200, :crop=>"fill" %>
+            <% end %>
+        </div>
+        <div class="col-4">
+            <h3><%= current_user.username%></h3>
+            <h4><%= current_user.full_name%></h4>
+            <h4><%= current_user.bio%></h4>
+            <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "btn btn-secondary"%>
+            <%= link_to 'Edit profile', edit_user_registration_path, class: "btn btn-secondary" %>
+        </div>
+    </div>
+    <%#current_user.inspect%>
+</div>
