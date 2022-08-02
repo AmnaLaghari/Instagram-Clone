@@ -30,7 +30,19 @@
       <%= f.password_field :current_password, class:"form-control", autocomplete: "current-password", placeholder:"Current Password"%>
     </div>
 
-  <div class="field mb-3">
+    <div class="field mb-3">
+      <%= f.text_field :username, class:"form-control", autocomplete: "username", placeholder:"Username"%>
+    </div>
+
+    <div class="field mb-3">
+      <%= f.text_field :full_name, class:"form-control", autocomplete: "full_name", placeholder:"Full name"%>
+    </div>
+
+    <div class="field mb-3">
+      <%= f.text_area :bio, class:"form-control", autocomplete: "bio", placeholder:"Bio"%>
+    </div>
+
+    <div class="field mb-3">
       <%if current_user.avatar.attached?%>
         <%= f.label :Change_Display_Picture %><br />
         <%= image_tag current_user.avatar, :width=>150, :crop=>"fill"%>

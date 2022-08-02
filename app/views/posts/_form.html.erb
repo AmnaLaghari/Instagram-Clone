@@ -1,11 +1,20 @@
 <div class="container">
   <%= form_with(model: post, local: true) do |form| %>
+    <% if post.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+        <ul>
+        <% post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
     <div class="field mb-3">
       <%= form.text_field :caption, class:"form-control", placeholder:"Caption" %>
     </div>
-
     <div class="field mb-3">
-      <%= form.file_field :imagees, class:"form-control", type:"file", id:"formFile", multiple: true%>
+      <%= form.file_field :images, class:"form-control", type:"file", id:"formFile", multiple: true, direct_upload: true%>
     </div>
     <div class="field">
       <%= form.number_field :user_id, id: :post_user_id, class:"form-control", value: current_user.id, type: :hidden %>
