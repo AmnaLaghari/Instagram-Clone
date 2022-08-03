@@ -68,3 +68,4 @@ end
 gem 'cloudinary'
 gem 'devise'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'bootstrap-sass', '~> 3.4', '>= 3.4.1'
