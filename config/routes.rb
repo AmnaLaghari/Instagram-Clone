@@ -10,6 +10,6 @@ Rails.application.routes.draw do
   end
 
   unauthenticated do
-    root 'home#index'
+    root 'home_page#index'
   end
 end
