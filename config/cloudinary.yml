@@ -1,11 +1,6 @@
 development:
-  cloud_name: "dy2zty4c5"
-  api_key: "431148155554578"
-  api_secret: "IArPOHM6bguahMTMx1tPDUgdSIA"
-  secure: true
+  cloud_name: <%= Rails.application.credentials.fetch(:cloud_name)%>
+  api_key: <%= Rails.application.credentials.fetch(:api_key)%>
+  api_secret: <%= Rails.application.credentials.fetch(:api_secret)%>
+  secure: <%= Rails.application.credentials.fetch(:secure)%>
 
-production:
-  cloud_name: "dy2zty4c5"
-  api_key: "431148155554578"
-  api_secret: "IArPOHM6bguahMTMx1tPDUgdSIA"
-  secure: true
