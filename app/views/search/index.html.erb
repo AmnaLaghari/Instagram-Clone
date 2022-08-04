@@ -1,0 +1,21 @@
+<h1 class="text-center"><%= pluralize(@users.count, "Results")%></h1>
+<%= render 'search/form'%>
+<div class="container">
+  <table class="table table-light table-stripped">
+    <thead>
+    <tr>
+      <th><%= sort_link(@query, :username, "Username, default_order: :asc")%></th>
+      <th><%= sort_link(@query, :full_name, "Full name")%></th>
+    </tr>
+    <thead>
+
+    <tbody>
+      <% @users.each do |user|%>
+        <tr>
+          <td><%= link_to user.username, user %>
+          <td><%= link_to user.full_name, user %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
