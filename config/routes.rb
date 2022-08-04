@@ -4,11 +4,12 @@ Rails.application.routes.draw do
   resources :posts
   devise_for :users
   resources :home
+  resources :users
   authenticated do
     root 'posts#index'
   end
 
   unauthenticated do
-    root 'home_page#index'
+    root 'home#index'
   end
 end

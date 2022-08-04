@@ -65,14 +65,7 @@ group :test do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'bootstrap-sass', '~> 3.4', '>= 3.4.1'
 gem 'cloudinary'
 gem 'devise'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
-<<<<<<< HEAD
-<<<<<<< HEAD
-# Bootstrap
-=======
->>>>>>> Changes devise views:
-=======
->>>>>>> 83047cf25297f4a4afc111bd7d6899ce77773e09
-gem 'bootstrap-sass', '~> 3.4', '>= 3.4.1'

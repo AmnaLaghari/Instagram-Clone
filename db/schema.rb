@@ -44,13 +44,13 @@ ActiveRecord::Schema.define(version: 2022_08_02_124749) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
-  create_table "relationshops", force: :cascade do |t|
+  create_table "relationships", force: :cascade do |t|
     t.integer "follower_id"
     t.integer "followee_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_relationshops_on_user_id"
+    t.index ["user_id"], name: "index_relationships_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -77,5 +77,5 @@ ActiveRecord::Schema.define(version: 2022_08_02_124749) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "relationshops", "users"
+  add_foreign_key "relationships", "users"
 end

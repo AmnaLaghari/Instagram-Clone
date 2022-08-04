@@ -22,7 +22,7 @@
               <%= link_to 'Edit profile', edit_user_registration_path, class: "nav-link" %>
             </li>
             <li>
-              <%= image_tag current_user.avatar, :width=>50, :crop=>"fill", class:"border border-dark rounded-circle ms-3"%>
+              <%= image_tag current_user.avatar, :width=>50, :crop=>"fill", class:"img-circle img-thumbnail"%>
             </li>
           <% else %>
             <li class="nav-item">
