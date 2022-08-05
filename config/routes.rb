@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :home
   resources :users
+  resource :friendships, only: [:create, :destroy]
   authenticated do
     root 'posts#index'
   end
