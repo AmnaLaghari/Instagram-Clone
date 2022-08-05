@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2022_08_02_124749) do
     t.text "caption"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -77,5 +77,6 @@ ActiveRecord::Schema.define(version: 2022_08_02_124749) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "posts", "users"
   add_foreign_key "relationships", "users"
 end

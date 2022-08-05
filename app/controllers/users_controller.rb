@@ -7,7 +7,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    @posts = Post.find_by(user_id: params[:id])
   end
 
   private
