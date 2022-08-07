@@ -28,7 +28,7 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to post_url(@post), notice: 'Post was successfully created.'
     else
-      render :new, status: :unprocessable_entity, notice: 'Post was not created due to some issue. Plse try again'
+      render :new, status: :unprocessable_entity, notice: 'Post was not created due to some issue. Please try again'
     end
   end
 
@@ -36,7 +36,7 @@ class PostsController < ApplicationController
     if @post.update(post_params)
       redirect_to post_url(@post), notice: 'post was successfully updated.'
     else
-      render :new, status: :unprocessable_entity, notice: 'Post was not successfully updated.'
+      render :new, status: :unprocessable_entity, notice: 'Post was not successfully updated. please try again'
     end
   end
 

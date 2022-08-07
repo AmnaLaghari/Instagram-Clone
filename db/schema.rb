@@ -66,10 +66,10 @@ ActiveRecord::Schema.define(version: 2022_08_02_124749) do
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
     t.datetime "locked_at"
-    t.string "full_name", default: "", null: false
-    t.string "username", default: "", null: false
+    t.string "full_name", null: false
+    t.string "username", null: false
     t.text "bio"
-    t.string "privacy", default: "", null: false
+    t.string "privacy", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true

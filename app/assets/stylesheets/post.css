@@ -26,3 +26,9 @@
 .post_time{
   font-size:12px
 }
+
+.no_post{
+  color:rgb(141, 26, 26);
+  text-align: center;
+
+}
