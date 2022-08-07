@@ -12,3 +12,12 @@
  *= require_self
  *= require_tree
  */
+
+ .nav_brand {
+  width:150px;
+  height:60px
+ }
+
+ .nav_avatar {
+  width: 50px;
+ }

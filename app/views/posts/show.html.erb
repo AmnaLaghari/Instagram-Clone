@@ -5,7 +5,7 @@
         <div class="col-md-8">
           <% if @post.images.attached? %>
             <% @post.images.each do |image|%>
-              <%= image_tag image , width:"600px", :style=>'border:1px solid grey; margin:5px',class:"border border-start"%>
+              <%= image_tag image ,class:"post_image_l border border-start"%>
             <%end%>
           <%end%>
         </div>
@@ -14,10 +14,10 @@
             <%= image_tag current_user.avatar, :width=>50, :crop=>"fill", class:"img-circle img-thumbnail"%>
             <%= current_user.username%>
           </div>
-          <p style="margin-top:5px; font-size:24px; font-family: Georgia, serif">
+          <p class="post_caption">
             <%= @post.caption%>
           </p>
-          <p style="font-size:12px", class="text-right"><%= @post.created_at.strftime("#{@post.created_at.day.ordinalize} %B %Y") %> </p>
+          <p class="post_time text-right"><%= @post.created_at.strftime("#{@post.created_at.day.ordinalize} %B %Y") %> </p>
           <%= link_to 'Edit', edit_post_path(@post), class:"btn btn-default "%>
           <%= link_to 'Destroy', @post, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-default"%>
         </div>

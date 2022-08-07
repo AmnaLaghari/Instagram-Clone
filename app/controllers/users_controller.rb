@@ -6,9 +6,7 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
-  def show
-    @posts = Post.find_by(user_id: params[:id])
-  end
+  def show; end
 
   private
 

@@ -46,7 +46,7 @@
       <%if current_user.avatar.attached?%>
         <%= f.label :Change_Display_Picture %><br />
         <%= image_tag current_user.avatar, :width=>150, :crop=>"fill"%>
-        <%= f.file_field :avatar, class:"form-control", type:"file", id:"formFile" %>
+        <%= f.file_field :avatar, class:"form-control", type:"file", id:"formFile", accept: 'image/*' %>
       <%else%>
         <%= f.label :Choose_Display_Picture %><br />
         <%= f.file_field :avatar, class:"form-control", type:"file", id:"formFile" %>
