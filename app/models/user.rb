@@ -16,6 +16,7 @@ class User < ApplicationRecord
 
   has_many :following_users, foreign_key: :followee_id, class_name: 'Relationship', dependent: :destroy
 
+<<<<<<< HEAD
   has_many :followers, through: :following_users, source: :follower
 
   def follow(user)
@@ -29,4 +30,9 @@ class User < ApplicationRecord
   def following?(user)
     followee.include?(user)
   end
+=======
+  has_many :followers, through: :followee
+
+  has_many :comments, dependent: :destroy
+>>>>>>> Created comments
 end

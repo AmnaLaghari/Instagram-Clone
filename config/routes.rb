@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get 'search', to: 'search#index'
   resources :posts
   devise_for :users
   resources :home, only: %i[index]
   resources :users
   resource :relationships, only: %i[create destroy]
-
+  resources :posts do
+    resources :comments
+  end
   authenticated do
     root 'posts#index'
   end
