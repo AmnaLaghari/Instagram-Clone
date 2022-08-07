@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FriendshipsController < ApplicationController
+class RelationshipsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user
   def create
