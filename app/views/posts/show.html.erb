@@ -20,6 +20,12 @@
           <p class="post_time text-right"><%= @post.created_at.strftime("#{@post.created_at.day.ordinalize} %B %Y") %> </p>
           <%= link_to 'Edit', edit_post_path(@post), class:"btn btn-default "%>
           <%= link_to 'Destroy', @post, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-default"%>
+          <br/>
+          <h4>Comments</h4>
+          <%= render @post.comments %>
+          <br/>
+          <h4>Add a comment:</h4>
+          <%= render 'comments/form' %>
         </div>
     </div>
     <%= link_to 'Back', posts_path, class:"btn btn-default mt-3" %>

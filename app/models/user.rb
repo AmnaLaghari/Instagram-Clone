@@ -17,4 +17,6 @@ class User < ApplicationRecord
   has_many :followee, foreign_key: :followee_id, class_name: 'Relationship', dependent: :destroy
 
   has_many :followers, through: :followee
+
+  has_many :comments, dependent: :destroy
 end
