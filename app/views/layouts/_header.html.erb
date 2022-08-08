@@ -9,7 +9,7 @@
           <span class="icon-bar"></span>
         </button>
         <a href="#">
-        <%= image_tag ('png-clipart-logo-brand-instagram-social-media-graphy-instagram-text-photography-thumbnail-removebg-preview.png'), :style => "width:150px; height:60px", :class=> "d-inline-block align-text-top"%>
+        <%= image_tag ('instaa.png'), :class=> "nav_brand"%>
       </a>
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -20,6 +20,9 @@
             </li>
             <li class="nav-item">
               <%= link_to 'Edit profile', edit_user_registration_path, class: "nav-link" %>
+            </li>
+            <li>
+              <%= image_tag current_user.avatar, :width=>50, class:"img-circle img-thumbnail"%>
             </li>
           <% else %>
             <li class="nav-item">

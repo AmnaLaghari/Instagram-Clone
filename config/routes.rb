@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :posts
   devise_for :users
   resources :home
-
+  resources :users
   authenticated do
-    root 'home#about'
+    root 'posts#index'
   end
 
   unauthenticated do

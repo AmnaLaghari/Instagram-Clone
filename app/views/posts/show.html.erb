@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-8">
+          <% if @post.images.attached? %>
+            <% @post.images.each do |image|%>
+              <%= image_tag image ,class:"post_image_l border border-start"%>
+            <%end%>
+          <%end%>
+        </div>
+        <div class="col-md-3">
+          <div class="fs-4 mt-3">
+            <%= image_tag current_user.avatar, :width=>50, :crop=>"fill", class:"img-circle img-thumbnail"%>
+            <%= current_user.username%>
+          </div>
+          <p class="post_caption">
+            <%= @post.caption%>
+          </p>
+          <p class="post_time text-right"><%= @post.created_at.strftime("#{@post.created_at.day.ordinalize} %B %Y") %> </p>
+          <%= link_to 'Edit', edit_post_path(@post), class:"btn btn-default "%>
+          <%= link_to 'Destroy', @post, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-default"%>
+        </div>
+    </div>
+    <%= link_to 'Back', posts_path, class:"btn btn-default mt-3" %>
+  </div>
+</div>
+
