@@ -1,14 +1,30 @@
 <div class="container-sm">
   <div class="container align-content-center">
-    <div class="row">
-      <div class="col">
-        <%= image_tag 'undraw_Social_share_re_qb4v (1).png', :style => "width:1000px; height:700px"%>
+    <div class="row home_cont">
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-5">
+            <%= image_tag 'home1.png', :class => "images"%>
+          </div>
+          <div class="col-md-5">
+            <%= image_tag 'home2.png', :class => "images"%>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-5">
+            <%= image_tag 'home3.png', :class => "images"%>
+          </div>
+          <div class="col-md-5">
+            <%= image_tag 'home4.png', :class => "images"%>
+          </div>
+        </div>
       </div>
-      <div class="col mt-5">
-        <div class="card mt-5">
-          <div class="card-body">
-          <%= link_to 'Sign Up', new_user_registration_path, class: "btn btn-secondary" %>
-          <%= link_to 'Sign In', new_user_session_path, class: "btn btn-dark" %>
+      <div class="col-md-4 home_body">
+        <div class="panel panel-default panell">
+          <p>Join us now<p>
+          <div class="panel-body p_body">
+            <%= link_to 'Sign Up', new_user_registration_path, class: "btn btn-default" %>
+            <%= link_to 'Sign In', new_user_session_path, class: "btn btn-default" %>
           </div>
         </div>
       </div>

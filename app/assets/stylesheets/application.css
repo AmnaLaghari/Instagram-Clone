@@ -14,10 +14,14 @@
  */
 
  .nav_brand {
-  width:150px;
-  height:60px
+  width:160px;
+  height:70px;
  }
 
  .nav_avatar {
   width: 50px;
+ }
+
+ .nav_links{
+  margin-top: 10px;
  }

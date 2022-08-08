@@ -50,6 +50,8 @@ ActiveRecord::Schema.define(version: 2022_08_02_124749) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["followee_id"], name: "index_relationships_on_followee_id", unique: true
+    t.index ["follower_id"], name: "index_relationships_on_follower_id", unique: true
     t.index ["user_id"], name: "index_relationships_on_user_id"
   end
 

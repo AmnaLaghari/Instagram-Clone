@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get 'search', to: 'search#index'
   resources :posts
   devise_for :users
-  resources :home
+  resources :home, only: %i[index]
   resources :users
   resource :relationships, only: %i[create destroy]
 
