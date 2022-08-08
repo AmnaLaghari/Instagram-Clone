@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CommentsController < ApplicationController
   before_action :set_post, only: %i[show edit update destroy]
   before_action :set_comment, only: %i[show edit update destroy]
@@ -6,11 +8,9 @@ class CommentsController < ApplicationController
     @comments = Comment.all
   end
 
-  def show
-  end
+  def show; end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @post = Post.find(params[:post_id])
@@ -24,9 +24,9 @@ class CommentsController < ApplicationController
 
   def update
     if @comment.update(comment_params)
-      redirect_to @post, notice: 'Comment was successfully updated.'
+      redirect_to @post, notice: 'Comment was successfully updated. '
     else
-      render 'edit', notice: 'Something went wrong'
+      render 'edit', notice: "Something went wrong. #{comment.errors}"
     end
   end
 
@@ -34,11 +34,12 @@ class CommentsController < ApplicationController
     if @comment.destroy
       redirect_to @post, notice: 'Comment was successfully deleted.'
     else
-      redirect_to comments_url, notice: 'Something went wrong'
+      redirect_to comments_url, notice: "Something went wrong.#{comment.errors}"
     end
   end
 
   private
+
   def comment_params
     params.require(:comment).permit(:content, :user_id, :post_id, [:comment])
   end
@@ -50,5 +51,4 @@ class CommentsController < ApplicationController
   def set_comment
     @comment = Comment.find(params[:id])
   end
-
 end
