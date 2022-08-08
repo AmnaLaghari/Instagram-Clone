@@ -14,7 +14,7 @@ class PostsController < ApplicationController
     if @post.destroy
       redirect_to posts_url, notice: 'Post was successfully deleted.'
     else
-      redirect_to posts_url, notice: "Something went wrong. #{@post.errors}"
+      redirect_to posts_url, notice: "Something went wrong.#{@post.errors}"
     end
   end
 
@@ -28,7 +28,7 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to post_url(@post), notice: 'Post was successfully created.'
     else
-      render :new, status: :unprocessable_entity, notice: "Post was not created due to some issue. Please try again. #{@post.errors}"
+      render :new, status: :unprocessable_entity, notice: "Post was not created due to some issue. Please try again. #{@post.errors} "
     end
   end
 
@@ -36,7 +36,7 @@ class PostsController < ApplicationController
     if @post.update(post_params)
       redirect_to post_url(@post), notice: 'post was successfully updated.'
     else
-      render :edit, status: :unprocessable_entity, notice: "Post was not successfully updated. Please try again #{@post.errors}"
+      render :edit, status: :unprocessable_entity, notice: "Post was not successfully updated. Please try again. #{@post.errors} "
     end
   end
 
