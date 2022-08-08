@@ -18,6 +18,9 @@ class User < ApplicationRecord
 
   has_many :followers, through: :following_users, source: :follower
 
+  def follow(user)
+    followed_users.create(followee_id: user.id)
+  end
 
   def unfollow(user)
     followed_users.find_by(followee_id: user.id).destroy
