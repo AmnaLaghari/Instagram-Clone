@@ -18,7 +18,8 @@ class CommentsController < ApplicationController
     if @comment.save
       redirect_to post_url(@post), notice: 'comment was successfully created.'
     else
-      flash[:alert] = "Your comment was not saved successfuly. Please try again #{comment.errors}"
+      redirect_to post_url(@post), notice: "comment was not successfully created.#{@comment.errors}"
+      flash[:notice] = 'comment cant be empty' if @comment.errors.any?
     end
   end
 
@@ -26,7 +27,8 @@ class CommentsController < ApplicationController
     if @comment.update(comment_params)
       redirect_to @post, notice: 'Comment was successfully updated. '
     else
-      render 'edit', notice: "Something went wrong. #{comment.errors}"
+      render :edit, status: :unprocessable_entity,
+                    notice: 'comment was not updated due to some issue. Please try again #{@comment.errors}'
     end
   end
 
@@ -34,7 +36,7 @@ class CommentsController < ApplicationController
     if @comment.destroy
       redirect_to @post, notice: 'Comment was successfully deleted.'
     else
-      redirect_to comments_url, notice: "Something went wrong.#{comment.errors}"
+      redirect_to comments_url, notice: "Something went wrong.#{@comment.errors}"
     end
   end
 

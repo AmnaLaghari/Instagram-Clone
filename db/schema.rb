@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 2022_08_07_202507) do
     t.text "caption"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -60,6 +60,8 @@ ActiveRecord::Schema.define(version: 2022_08_07_202507) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["followee_id"], name: "index_relationships_on_followee_id", unique: true
+    t.index ["follower_id"], name: "index_relationships_on_follower_id", unique: true
     t.index ["user_id"], name: "index_relationships_on_user_id"
   end
 
@@ -76,10 +78,10 @@ ActiveRecord::Schema.define(version: 2022_08_07_202507) do
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
     t.datetime "locked_at"
-    t.string "full_name", default: "", null: false
-    t.string "username", default: "", null: false
+    t.string "full_name", null: false
+    t.string "username", null: false
     t.text "bio"
-    t.string "privacy", default: "", null: false
+    t.string "privacy", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -90,5 +92,6 @@ ActiveRecord::Schema.define(version: 2022_08_07_202507) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
+  add_foreign_key "posts", "users"
   add_foreign_key "relationships", "users"
 end
