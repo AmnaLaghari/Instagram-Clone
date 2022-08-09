@@ -94,4 +94,9 @@ ActiveRecord::Schema.define(version: 2022_08_07_202507) do
   add_foreign_key "posts", "users"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
+<<<<<<< HEAD
+=======
+  add_foreign_key "posts", "users"
+  add_foreign_key "relationships", "users"
+>>>>>>> added failure massages to comments
 end
