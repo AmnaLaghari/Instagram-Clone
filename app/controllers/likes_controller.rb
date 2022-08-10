@@ -4,13 +4,17 @@ class LikesController < ApplicationController
     if !@like.save
       flash[:notice] = @like.errors.full_messages.to_sentence
     end
-    redirect_to users_url
+    respond_to do |format|
+      format.html { redirect_back fallback_location: users_path }
+    end
   end
   def destroy
     @like = current_user.likes.find(params[:id])
     post = @like.post
     @like.destroy
-    redirect_to users_url
+    respond_to do |format|
+      format.html { redirect_back fallback_location: users_path }
+    end
   end
 
   private
