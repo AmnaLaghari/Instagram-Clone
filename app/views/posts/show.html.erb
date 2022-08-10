@@ -14,6 +14,7 @@
             <%end%>
           <%end%>
         </div>
+        <% @user = User.find(@post.user_id)%>
         <div class="col-md-5">
           <div class="fs-4 mt-3">
             <%= image_tag @user.avatar, :width=>50, :crop=>"fill", class:"img-circle img-thumbnail"%>
@@ -56,11 +57,15 @@
 >>>>>>> Comments styling
         </div>
     </div>
+<<<<<<< HEAD
     <% if current_user == @user%>
       <%= link_to 'Back', posts_path, class:"btn btn-default mt-3" %>
     <% else %>
       <%= link_to 'Back', user_path(@user.id), class:"btn btn-default mt-3" %>
     <%end%>
+=======
+    <%= link_to 'Back', back_rout(@user), class:"btn btn-default mt-3" %>
+>>>>>>> Create feed for users
   </div>
 </div>
 
