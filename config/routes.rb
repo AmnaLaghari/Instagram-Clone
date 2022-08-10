@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :home
   resources :users
+  resources :likes, only: [:create, :destroy]
   resources :posts do
     resources :comments
   end

@@ -14,6 +14,16 @@
               <% if post.images.attached?%>
                 <%= link_to image_tag(post.images.first, class:"feed_image img-rounded"), post, class:"link" %>
               <% end %>
+              <% like = current_user.likes.find_by(post: post)%>
+              <% if like.nil? %>
+                <%= button_to likes_path, params: {like: {post_id: post.id}}, method: :post, class:"like-btn" do %>
+                  <%= image_tag('like.png',class:"icon")%>
+                <% end%>
+              <% else %>
+                <%= button_to like_path(like), method: :delete, class:"like-btn" do %>
+                  <%= image_tag('nlike.png',class:"icon")%>
+                <% end%>
+              <% end %>
               <%= link_to image_tag('comment.png',class:"icon"), post %>
               <br>
             </div>
