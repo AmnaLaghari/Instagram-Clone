@@ -22,6 +22,9 @@
               <%= link_to 'Edit profile', edit_user_registration_path, class: "nav-link" %>
             </li>
             <li>
+              <%= link_to 'home', users_path, class: "nav-link" %>
+            </li>
+            <li>
               <%= image_tag current_user.avatar, :width=>50, class:"img-circle img-thumbnail"%>
             </li>
           <% else %>
