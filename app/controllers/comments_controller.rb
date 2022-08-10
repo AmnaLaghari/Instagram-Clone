@@ -18,7 +18,7 @@ class CommentsController < ApplicationController
     if @comment.save
       redirect_to post_url(@post), notice: 'comment was successfully created.'
     else
-      redirect_to post_url(@post), notice: "#{@comment.errors.full_messages.to_sentence}"
+      redirect_to post_url(@post), notice: @comment.errors.full_messages.to_sentence.to_s
 
     end
   end
@@ -27,7 +27,7 @@ class CommentsController < ApplicationController
     if @comment.update(comment_params)
       redirect_to @post, notice: 'Comment was successfully updated. '
     else
-      redirect_to edit_post_comment_url, notice: "#{@comment.errors.full_messages.to_sentence}"
+      redirect_to edit_post_comment_url, notice: @comment.errors.full_messages.to_sentence.to_s
     end
   end
 
@@ -35,7 +35,7 @@ class CommentsController < ApplicationController
     if @comment.destroy
       redirect_to @post, notice: 'Comment was successfully deleted.'
     else
-      redirect_to comments_url, notice: "#{@comment.errors.full_messages.to_sentence}"
+      redirect_to comments_url, notice: @comment.errors.full_messages.to_sentence.to_s
     end
   end
 
