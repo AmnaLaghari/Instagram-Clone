@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_07_202507) do
+ActiveRecord::Schema.define(version: 2022_08_10_122631) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,11 +46,21 @@ ActiveRecord::Schema.define(version: 2022_08_07_202507) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_likes_on_post_id"
+    t.index ["user_id", "post_id"], name: "index_likes_on_user_id_and_post_id", unique: true
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.text "caption"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id"
+    t.integer "user_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -60,8 +70,6 @@ ActiveRecord::Schema.define(version: 2022_08_07_202507) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["followee_id"], name: "index_relationships_on_followee_id", unique: true
-    t.index ["follower_id"], name: "index_relationships_on_follower_id", unique: true
     t.index ["user_id"], name: "index_relationships_on_user_id"
   end
 
@@ -78,10 +86,10 @@ ActiveRecord::Schema.define(version: 2022_08_07_202507) do
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
     t.datetime "locked_at"
-    t.string "full_name", null: false
-    t.string "username", null: false
+    t.string "full_name", default: "", null: false
+    t.string "username", default: "", null: false
     t.text "bio"
-    t.string "privacy", null: false
+    t.string "privacy", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -95,8 +103,13 @@ ActiveRecord::Schema.define(version: 2022_08_07_202507) do
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   add_foreign_key "posts", "users"
+=======
+  add_foreign_key "likes", "posts"
+  add_foreign_key "likes", "users"
+>>>>>>> Like implmentation
   add_foreign_key "relationships", "users"
 >>>>>>> added failure massages to comments
 end

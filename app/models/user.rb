@@ -34,5 +34,10 @@ class User < ApplicationRecord
   has_many :followers, through: :followee
 
   has_many :comments, dependent: :destroy
+<<<<<<< HEAD
 >>>>>>> Created comments
+=======
+
+  has_many :likes
+>>>>>>> Like implmentation
 end

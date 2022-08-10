@@ -5,7 +5,11 @@ Rails.application.routes.draw do
   devise_for :users
   resources :home, only: %i[index]
   resources :users
+<<<<<<< HEAD
   resource :relationships, only: %i[create destroy]
+=======
+  resources :likes, only: [:create, :destroy]
+>>>>>>> Like implmentation
   resources :posts do
     resources :comments
   end
