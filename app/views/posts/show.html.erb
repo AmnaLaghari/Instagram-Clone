@@ -1,13 +1,8 @@
 <div class="container">
-<<<<<<< HEAD
-  <% @user = User.find(@post.user_id)%>
-  <div class="panel panel-default">
-=======
   <div class="panel panel-danger">
->>>>>>> Comments styling
     <div class="panel-body">
       <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-8">
           <% if @post.images.attached? %>
             <% @post.images.each do |image|%>
               <%= image_tag image ,class:"post_image_l border border-start"%>
@@ -24,37 +19,9 @@
             <%= @post.caption%>
           </p>
           <p class="post_time text-right"><%= @post.created_at.strftime("#{@post.created_at.day.ordinalize} %B %Y") %> </p>
-<<<<<<< HEAD
-          <% if current_user == @user%>
-            <%= link_to 'Edit', edit_post_path(@post), class:"btn btn-default "%>
-            <%= link_to 'Destroy', @post, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-default"%>
-          <% end %>
-=======
           <%= link_to 'Edit', edit_post_path(@post), class:"btn btn-default "%>
           <%= link_to 'Destroy', @post, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-default"%>
-          <% like = current_user.likes.find_by(post: @post)%>
-          <% if like.nil? %>
-            <%= button_to likes_path, params: {like: {post_id: @post.id}}, method: :post, class:"like-btn" do %>
-              <%= image_tag('like.png',class:"icon")%>
-            <% end%>
-          <% else %>
-            <%= button_to like_path(like), method: :delete, class:"like-btn" do %>
-              <%= image_tag('nlike.png',class:"icon")%>
-            <% end%>
-          <% end %>
           <br/>
-<<<<<<< HEAD
-          <h4>Comments</h4>
-          <%= render @post.comments %>
-          <br/>
-          <h4>Add a comment:</h4>
-          <%= render 'comments/form' %>
-<<<<<<< HEAD
->>>>>>> Created comments
-=======
-
->>>>>>> Edit comments
-=======
           <div class="panel panel-danger comment">
             <div class="panel-heading" style="background-color:#f5dff2">Comments</div>
             <div class="panel-body">
@@ -64,18 +31,13 @@
               <%= render 'comments/form' %>
             </div>
           </div>
->>>>>>> Comments styling
         </div>
     </div>
-<<<<<<< HEAD
     <% if current_user == @user%>
       <%= link_to 'Back', posts_path, class:"btn btn-default mt-3" %>
     <% else %>
       <%= link_to 'Back', user_path(@user.id), class:"btn btn-default mt-3" %>
     <%end%>
-=======
-    <%= link_to 'Back', back_rout(@user), class:"btn btn-default mt-3" %>
->>>>>>> Create feed for users
   </div>
 </div>
 

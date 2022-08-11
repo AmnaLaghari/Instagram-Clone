@@ -19,17 +19,13 @@
               <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class:"nav_links"%>
             </li>
             <li class="nav-item">
-              <%= link_to 'Edit profile', edit_user_registration_path, class:"nav_links" %>
+              <%= link_to 'Edit profile', edit_user_registration_path, class: "nav-link" %>
             </li>
             <li>
-<<<<<<< HEAD
-              <%= link_to (image_tag current_user.avatar, :width=>50, class:"img-circle img-thumbnail"), posts_path %>
-=======
               <%= link_to 'home', users_path, class: "nav-link" %>
             </li>
             <li>
               <%= image_tag current_user.avatar, :width=>50, class:"img-circle img-thumbnail"%>
->>>>>>> Create feed for users
             </li>
           <% else %>
             <li class="nav-item">
