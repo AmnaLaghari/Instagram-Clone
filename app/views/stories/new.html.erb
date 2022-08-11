@@ -1,5 +1,6 @@
 <div class="container">
-  <%= form_with(model: @story, local: true) do |form| %>
+  <% @story = @user.stories.build%>
+  <%= form_with model:[@user, @story] do |form| %>
     <div class="form-group">
       <%= form.file_field :images, class:"form-control", type:"file", id:"formFile", multiple: true, direct_upload: true, accept: 'image/*'%>
     </div>

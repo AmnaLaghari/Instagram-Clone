@@ -1,12 +1,13 @@
 <div class="container">
   <div class="panel panel-danger">
     <div class="panel-body">
+    <% @user = User.find(params[:user_id])%>
       <div class="row">
-        <% @stories.each do |story|%>
+        <% @user.stories.each do |story|%>
           <div class="col-md-7">
             <% if story.images.attached? %>
               <% story.images.each do |image|%>
-                <%= image_tag image ,class:"post_image_l border border-start"%>
+                <%= link_to image_tag(image ,class:"post_image_l border border-start"), user_story_path(user_id: @user.id, id: story.id)%>
               <%end%>
             <%end%>
           </div>
@@ -17,12 +18,8 @@
             <%= image_tag @user.avatar, :width=>50, :crop=>"fill", class:"img-circle img-thumbnail"%>
             <%= @user.username%>
           </div>
-          <%# <p class="post_time text-right"><%= @post.created_at.strftime("#{@post.created_at.day.ordinalize} %B %Y") </p> %>
-          <% if current_user == @user %>
-            <%= link_to 'Destroy', @story, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-default"%>
-          <% end %>
         </div>
     </div>
-    <%= link_to 'Back', back_rout(@user), class:"btn btn-default mt-3" %>
+    <%= link_to 'Back', users_path, class:"btn btn-default mt-3" %>
   </div>
 </div>

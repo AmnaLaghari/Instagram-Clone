@@ -68,6 +68,7 @@ end
 gem 'bootstrap-sass', '~> 3.4', '>= 3.4.1'
 gem 'cloudinary'
 gem 'devise'
+gem 'sidekiq'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'ransack', '~> 2.5'
