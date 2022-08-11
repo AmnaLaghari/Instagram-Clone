@@ -1,12 +1,19 @@
 <div class="container">
   <div class="feed">
+    <% @stories = Story.all%>
+    <% @users = User.all%>
+    <% @users.each do |user|%>
+      <% if user.stories.any?%>
+        <%= link_to image_tag(user.avatar, class:"img-circle img-thumbnail user_image"), stories_path %>
+      <% end %>
+    <% end %>
     <% @posts = Post.all%>
     <% @posts.each do |post|%>
       <% @user =User.find(post.user_id) %>
       <% if @user!=current_user%>
         <div class="panel panel-danger">
           <div class="panel-heading"style="background-color:#f5dff2">
-            <%= image_tag @user.avatar, :width=>50, :crop=>"fill", class:"img-circle img-thumbnail"%>
+            <%= image_tag @user.avatar, class:"img-circle img-thumbnail user_image"%>
             <%= @user.username%>
           </div>
           <div class="panel-body">
