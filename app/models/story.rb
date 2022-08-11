@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 class Story < ApplicationRecord
   belongs_to :user
   has_many_attached :images, dependent: :destroy
   validate :correct_image_type
+  validates :images, presence: true
 
   private
 

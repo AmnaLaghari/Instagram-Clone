@@ -4,7 +4,7 @@
     <% @users = User.all%>
     <% @users.each do |user|%>
       <% if user.stories.any?%>
-        <%= link_to image_tag(user.avatar, class:"img-circle img-thumbnail user_image"), stories_path %>
+        <%= link_to image_tag(user.avatar, class:"img-circle img-thumbnail user_image"), user_stories_path(user_id: user.id ) %>
       <% end %>
     <% end %>
     <% @posts = Post.all%>

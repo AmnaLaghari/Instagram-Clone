@@ -1,22 +1,26 @@
+# frozen_string_literal: true
+
 class StoriesController < ApplicationController
   before_action :set_story, only: %i[show destroy]
+  before_action :set_user, only: %i[new show destroy]
+  def index
+    @stories = Story.all
+  end
 
   def new
     @story = Story.new
   end
 
-  def index
-    @stories = Story.all
-  end
-
   def show; end
 
   def create
-    @story = Story.new(story_params)
+    @user = User.find(params[:user_id])
+    @story = @user.stories.create(story_params)
     if @story.save
-      redirect_to users, notice: 'story is successfuly created'
+      DeleteStoriesJob.set(wait: 1.day).perform_later(@story.id)
+      redirect_to users_url, notice: 'story is successfuly created'
     else
-      render :new, notice: @story.errors.full_messages.to_sentence.to_s
+      redirect_to new_user_story_url, notice: @story.errors.full_messages.to_sentence.to_s
     end
   end
 
@@ -36,5 +40,9 @@ class StoriesController < ApplicationController
 
   def set_story
     @story = Story.find(params[:id])
+  end
+
+  def set_user
+    @user = User.find(params[:user_id])
   end
 end

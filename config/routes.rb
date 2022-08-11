@@ -4,9 +4,10 @@ Rails.application.routes.draw do
   resources :posts
   devise_for :users
   resources :home
-  resources :users
-  resources :likes, only: [:create, :destroy]
-  resources :stories, only: [:create, :destroy, :new, :index, :show]
+  resources :likes, only: %i[create destroy]
+  resources :users do
+    resources :stories, only: %i[create destroy new index show]
+  end
   resources :posts do
     resources :comments
   end
