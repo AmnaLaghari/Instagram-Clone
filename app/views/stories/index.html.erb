@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="panel panel-danger">
+    <div class="panel-body">
+    <% @user = User.find(params[:user_id])%>
+      <div class="row">
+        <% @user.stories.each do |story|%>
+          <div class="col-md-7">
+            <% if story.images.attached? %>
+              <% story.images.each do |image|%>
+                <%= link_to image_tag(image ,class:"post_image_l border border-start"), user_story_path(user_id: @user.id, id: story.id)%>
+              <%end%>
+            <%end%>
+          </div>
+          <% @user = User.find(story.user_id)%>
+        <% end %>
+        <div class="col-md-5">
+          <div class="fs-4 mt-3">
+            <%= image_tag @user.avatar, :width=>50, :crop=>"fill", class:"img-circle img-thumbnail"%>
+            <%= @user.username%>
+          </div>
+        </div>
+    </div>
+    <%= link_to 'Back', users_path, class:"btn btn-default mt-3" %>
+  </div>
+</div>

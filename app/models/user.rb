@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_one_attached :avatar
   validates :username, :full_name, :privacy, presence: true
   validates :username, uniqueness: true
+  validates :password, confirmation: true
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable
@@ -19,4 +20,8 @@ class User < ApplicationRecord
   has_many :followers, through: :followee
 
   has_many :comments, dependent: :destroy
+
+  has_many :likes, dependent: :destroy
+
+  has_many :stories, dependent: :destroy
 end
