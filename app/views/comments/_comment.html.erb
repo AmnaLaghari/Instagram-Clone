@@ -5,7 +5,7 @@
   <span class="username"><%= @user.username %> : </span>
   <%= comment.content %>
   <% if current_user == @user%>
-    <%= link_to image_tag('edit.png',class:"icon"), edit_post_comment_path(@post.id, comment.id) %>
+    <%= link_to image_tag('edit.png',class:"icon"), edit_post_comment_path(@post.id, comment.id) if policy(comment).update? %>
   <% end %>
-  <%= link_to image_tag('delete.png',class:"icon"), post_comment_path(@post.id,comment.id), method: :delete, data: { confirm: 'Are you sure?' }%>
+  <%= link_to image_tag('delete.png',class:"icon"), post_comment_path(@post.id,comment.id), method: :delete, data: { confirm: 'Are you sure?' } if policy(@post).destroy?%>
 </div>

@@ -2,8 +2,13 @@
 
 class PostsController < ApplicationController
   before_action :set_post, only: %i[show edit update destroy]
+
+  after_action :verify_authorized, except: :index
+  after_action :verify_policy_scoped, only: :index
+
   def index
     @posts = Post.all
+    @posts = policy_scope(Post).reverse
   end
 
   def edit; end
@@ -20,11 +25,12 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
+    authorize @post
   end
 
   def create
     @post = Post.new(post_params)
-
+    authorize @post
     if @post.save
       redirect_to post_url(@post), notice: 'Post was successfully created.'
     else
@@ -46,6 +52,7 @@ class PostsController < ApplicationController
 
   def set_post
     @post = Post.find(params[:id])
+    authorize @post
   end
 
   def post_params

@@ -4,8 +4,12 @@ class CommentsController < ApplicationController
   before_action :set_post, only: %i[show edit update destroy]
   before_action :set_comment, only: %i[show edit update destroy]
 
+  after_action :verify_authorized, except: :index
+  after_action :verify_policy_scoped, only: :index
+
   def index
     @comments = Comment.all
+    @comments = policy_scope(Comment).reverse
   end
 
   def show; end
@@ -15,6 +19,7 @@ class CommentsController < ApplicationController
   def create
     @post = Post.find(params[:post_id])
     @comment = @post.comments.create(comment_params)
+    authorize @comment
     if @comment.save
       redirect_to post_url(@post), notice: 'comment was successfully created.'
     else
@@ -47,9 +52,11 @@ class CommentsController < ApplicationController
 
   def set_post
     @post = Post.find(params[:post_id])
+    authorize @post
   end
 
   def set_comment
     @comment = Comment.find(params[:id])
+    authorize @comment
   end
 end

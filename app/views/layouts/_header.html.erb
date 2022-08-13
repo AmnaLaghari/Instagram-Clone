@@ -16,16 +16,16 @@
         <ul class="nav navbar-nav">
           <% if user_signed_in?%>
             <li>
-              <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class:"nav_links"%>
+              <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "nav-link" if policy(current_user).user_exist?%>
             </li>
             <li class="nav-item">
-              <%= link_to 'Edit profile', edit_user_registration_path, class: "nav-link" %>
+              <%= link_to 'Edit profile', edit_user_registration_path, class: "nav-link" if policy(current_user).user_exist?%>
             </li>
             <li>
-              <%= link_to 'home', users_path, class: "nav-link" %>
+              <%= link_to 'home', users_path, class: "nav-link" if policy(current_user).user_exist?%>
             </li>
             <li class="nav-item">
-              <%= link_to 'Create story', new_user_story_path(user_id: current_user.id), class: "nav-link" %>
+              <%= link_to 'Create story', new_user_story_path(user_id: current_user.id), class: "nav-link" if policy(current_user).user_exist? %>
             </li>
             <li>
               <%= image_tag current_user.avatar, :width=>50, class:"img-circle img-thumbnail"%>

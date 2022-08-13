@@ -70,5 +70,6 @@ gem 'cloudinary'
 gem 'devise'
 gem 'sidekiq'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'pundit'
 
 gem 'ransack', '~> 2.5'
