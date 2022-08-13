@@ -47,15 +47,11 @@
           </div>
         </div>
     </div>
-<<<<<<< HEAD
     <% if current_user == @user%>
       <%= link_to 'Back', posts_path, class:"btn btn-default mt-3" %>
     <% else %>
       <%= link_to 'Back', user_path(@user.id), class:"btn btn-default mt-3" %>
     <%end%>
-=======
-    <%= link_to 'Back', back_rout(@user), class:"btn btn-default mt-3" %>
->>>>>>> 3fc5d51b2866c0a8174109cde802b567590b7b40
   </div>
 </div>
 
