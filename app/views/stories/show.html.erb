@@ -16,7 +16,7 @@
             <%= @user.username%>
           </div>
           <% if current_user == @user %>
-            <%= link_to 'Destroy', user_story_path(@user.id, @story.id), method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-default"%>
+            <%= link_to 'Destroy', user_story_path(@user.id, @story.id), method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-default" if policy(@story).destroy?%>
           <% end %>
         </div>
     </div>

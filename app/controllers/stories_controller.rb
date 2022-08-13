@@ -3,12 +3,18 @@
 class StoriesController < ApplicationController
   before_action :set_story, only: %i[show destroy]
   before_action :set_user, only: %i[new show destroy]
+
+  after_action :verify_authorized, except: :index
+  after_action :verify_policy_scoped, only: :index
+
   def index
     @stories = Story.all
+    @stories = policy_scope(Story).reverse
   end
 
   def new
     @story = Story.new
+    authorize @story
   end
 
   def show; end
@@ -16,6 +22,7 @@ class StoriesController < ApplicationController
   def create
     @user = User.find(params[:user_id])
     @story = @user.stories.create(story_params)
+    authorize @story
     if @story.save
       DeleteStoriesJob.set(wait: 1.day).perform_later(@story.id)
       redirect_to users_url, notice: 'story is successfuly created'
@@ -40,6 +47,7 @@ class StoriesController < ApplicationController
 
   def set_story
     @story = Story.find(params[:id])
+    authorize @story
   end
 
   def set_user
