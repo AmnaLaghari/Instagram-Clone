@@ -6,10 +6,13 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_query
 
+<<<<<<< HEAD
   def set_query
     @query = User.ransack(params[:q])
   end
 
+=======
+>>>>>>> 3fc5d51b2866c0a8174109cde802b567590b7b40
   rescue_from Pundit::NotAuthorizedError do
     redirect_to root_url, alert: "You dont have access to this page"
   end
