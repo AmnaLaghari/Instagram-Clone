@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :posts
+  get 'search', to: 'search#index'
   devise_for :users
   resources :home, only: %i[index]
   resource :relationships, only: %i[create destroy]

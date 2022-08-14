@@ -16,12 +16,17 @@ class CommentsController < ApplicationController
 
   def edit; end
 
+  def new
+    @comment = Comment.new
+    authorize @comment
+  end
+
   def create
     @post = Post.find(params[:post_id])
     @comment = @post.comments.create(comment_params)
     authorize @comment
     if @comment.save
-      redirect_to post_url(@post), notice: 'comment was successfully created.'
+      redirect_to post_path(@post.id), notice: 'comment was successfully created.'
     else
       redirect_to post_url(@post), notice: @comment.errors.full_messages.to_sentence.to_s
 

@@ -23,6 +23,9 @@ class PostPolicy < ApplicationPolicy
     user_is_owner_ofrecord?
   end
 
+  def destroy_comment?
+    user == @record.user
+  end
   private
 
   def user_is_owner_ofrecord?

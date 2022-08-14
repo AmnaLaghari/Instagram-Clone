@@ -8,12 +8,11 @@ class CommentPolicy < ApplicationPolicy
 
   attr_reader :post, :record
 
-  def initialize(post, record)
-    @post = post
-    @record = record
+  def index?
+    user.present?
   end
 
-  def index?
+  def new?
     user.present?
   end
 
@@ -22,10 +21,10 @@ class CommentPolicy < ApplicationPolicy
   end
 
   def update?
-    user == record.user
+    user == @record.user
   end
 
   def destroy?
-    return true if user.present? && user == post.user
+    return true if user.present? && user == @record.user
   end
 end
