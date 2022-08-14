@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class StoriesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_story, only: %i[show destroy]
   before_action :set_user, only: %i[new show destroy]
 

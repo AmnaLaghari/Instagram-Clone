@@ -10,19 +10,14 @@ class User < ApplicationRecord
          :confirmable
 
   has_many :posts, dependent: :destroy
-
   has_many :followed_users, foreign_key: :follower_id, class_name: 'Relationship', dependent: :destroy
-
   has_many :followee, through: :followed_users, source: :followee
-
   has_many :following_users, foreign_key: :followee_id, class_name: 'Relationship', dependent: :destroy
-
   has_many :followers, through: :following_users, source: :follower
-
+  has_many :recieved_requests, class_name: 'Request', foreign_key: :reciever_id, dependent: :destroy
+  has_many :sent_requests, class_name: 'Request', foreign_key: :sender_id, dependent: :destroy
   has_many :comments, dependent: :destroy
-
   has_many :likes, dependent: :destroy
-
   has_many :stories, dependent: :destroy
 
   def follow(user)
@@ -36,4 +31,13 @@ class User < ApplicationRecord
   def following?(user)
     followee.include?(user)
   end
+
+  def send_request(user)
+    sent_requests.create(reciever_id: user.id)
+  end
+
+  def delete_request(user)
+    sent_requests.find_by(reciever_id: user.id).destroy
+  end
+
 end

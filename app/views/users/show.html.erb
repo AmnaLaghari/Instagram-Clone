@@ -13,8 +13,14 @@
               <% if current_user.following?(@user) %>
                   <h5><%= button_to "Unfollow", relationships_path(user_id: @user.id), method: :delete, :class => "btn btn default" %></h5>
               <% else %>
-                  <h5><%= button_to "Follow", relationships_path(user_id: @user.id), :class => "btn btn default" %></h5>
-              <% end%>
+                <% if @user.privacy ==  'Public'%>
+                    <h5><%= button_to "Follow", relationships_path(user_id: @user.id), :class => "btn btn default" %></h5>
+                <% elsif requested?(current_user.sent_requests,@user) %>
+                    Requested
+                <% else %>
+                    <h5><%= button_to "Follow", requests_path(reciever_id: @user.id), :class => "btn btn default" %></h5>
+                <% end%>
+              <% end %>
           </div>
       </div>
   </div>

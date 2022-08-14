@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class LikesController < ApplicationController
+  before_action :authenticate_user!
   after_action :verify_authorized
 
   def create
