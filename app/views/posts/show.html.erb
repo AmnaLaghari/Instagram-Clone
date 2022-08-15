@@ -12,7 +12,7 @@
         <% @user = User.find(@post.user_id)%>
         <div class="col-md-5">
           <div class="fs-4 mt-3">
-            <%= image_tag @user.avatar, :width=>50, :crop=>"fill", class:"img-circle img-thumbnail"%>
+            <%= image_tag select_avatar(@user), class:"img-circle img-thumbnail user_image"%>
             <%= @user.username%>
           </div>
           <p class="post_caption">

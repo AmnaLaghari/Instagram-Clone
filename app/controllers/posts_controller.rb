@@ -20,7 +20,7 @@ class PostsController < ApplicationController
     if @post.destroy
       redirect_to posts_url, notice: 'Post was successfully deleted.'
     else
-      redirect_to posts_url, notice: "Something went wrong.#{@post.errors}"
+      redirect_to posts_url, notice: "Something went wrong.#{@post.errors.full_messages.to_sentence}"
     end
   end
 

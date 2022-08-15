@@ -12,12 +12,10 @@
         <% @user = User.find(@story.user_id)%>
         <div class="col-md-5">
           <div class="fs-4 mt-3">
-            <%= image_tag @user.avatar, :width=>50, :crop=>"fill", class:"img-circle img-thumbnail"%>
+            <%= image_tag select_avatar(@user), :crop=>"fill", class:"img-circle img-thumbnail user_image"%>
             <%= @user.username%>
           </div>
-          <% if current_user == @user %>
-            <%= link_to 'Destroy', user_story_path(@user.id, @story.id), method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-default" if policy(@story).destroy?%>
-          <% end %>
+          <%= link_to image_tag('delete.png',class:"icon_comment"), user_story_path(@user.id, @story.id), method: :delete, data: { confirm: 'Are you sure?' }, class:"destroy" if policy(@story).destroy?%>
         </div>
     </div>
     <%= link_to 'Back', user_stories_path , class:"btn btn-default mt-3" %>

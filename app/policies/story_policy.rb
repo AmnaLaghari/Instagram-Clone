@@ -14,6 +14,10 @@ class StoryPolicy < ApplicationPolicy
     user.present?
   end
 
+  def show?
+    user_is_owner_ofrecord?
+  end
+
   def destroy?
     user_is_owner_ofrecord?
   end

@@ -45,12 +45,19 @@
     <div class="form-group">
       <%if current_user.avatar.attached?%>
         <%= f.label :Change_Display_Picture %><br />
-        <%= image_tag current_user.avatar, :width=>150, :crop=>"fill"%>
+        <%= image_tag select_avatar(current_user), :width=>150, :crop=>"fill"%>
         <%= f.file_field :avatar, class:"form-control", type:"file", id:"formFile", accept: 'image/*' %>
       <%else%>
         <%= f.label :Choose_Display_Picture %><br />
         <%= f.file_field :avatar, class:"form-control", type:"file", id:"formFile" %>
       <%end%>
+    </div>
+
+    <div>
+      <%= f.radio_button :privacy, 'Private'%>
+      <%= f.label :privacy, "Private", :value => "Private"%>
+      <%= f.radio_button :privacy, 'Public'%>
+      <%= f.label :privacy, "Public", :value => "Public" %>
     </div>
 
     <div class="actions">

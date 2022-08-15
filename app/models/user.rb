@@ -20,16 +20,16 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :stories, dependent: :destroy
 
-  def follow(user)
-    followed_users.create(followee_id: user.id)
-  end
+  # def follow(user)
+  #   following_users.create(follower_id: user.id)
+  # end
 
   def unfollow(user)
-    followed_users.find_by(followee_id: user.id).destroy
+    following_users.find_by(follower_id: user.id).destroy
   end
 
   def following?(user)
-    followee.include?(user)
+    followers.include?(user)
   end
 
   def send_request(user)
@@ -39,5 +39,4 @@ class User < ApplicationRecord
   def delete_request(user)
     sent_requests.find_by(reciever_id: user.id).destroy
   end
-
 end

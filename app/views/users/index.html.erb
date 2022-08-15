@@ -3,44 +3,56 @@
     <% @stories = Story.all%>
     <% @users = User.all%>
     <% @users.each do |user|%>
-      <% if user.stories.any?%>
-        <%= link_to image_tag(user.avatar, class:"img-circle img-thumbnail user_image"), user_stories_path(user_id: user.id ) %>
+      <% if current_user.following?(user) || user == current_user%>
+        <% if user.stories.any?%>
+          <%= link_to image_tag(select_avatar(@user), :crop=>"fill",  class:"img-circle img-thumbnail stories_img"), user_stories_path(user_id: user.id ) %>
+        <% end %>
       <% end %>
     <% end %>
-    <% @posts = Post.all%>
-    <% @posts.each do |post|%>
-      <% @user =User.find(post.user_id) %>
-      <% if @user!=current_user%>
-        <div class="panel panel-danger">
-          <div class="panel-heading"style="background-color:#f5dff2">
-            <%= image_tag @user.avatar, class:"img-circle img-thumbnail user_image"%>
-            <%= @user.username%>
-          </div>
-          <div class="panel-body">
-            <div class="row center-block">
-              <% if post.images.attached?%>
-                <%= link_to image_tag(post.images.first, class:"feed_image img-rounded"), post, class:"link" %>
-              <% end %>
-              <% like = current_user.likes.find_by(post: post)%>
-              <% if like.nil? %>
-                <% if policy(@user).user_exist? %>
-                  <%= button_to likes_path, params: {like: {post_id: post.id}}, method: :post, class:"like-btn" do %>
-                    <%= image_tag('like.png',class:"icon")%>
-                  <% end%>
-                <% end %>
-              <% else %>
-                <% if policy(like).destroy? %>
-                  <%= button_to like_path(like), method: :delete, class:"like-btn" do %>
-                    <%= image_tag('nlike.png',class:"icon")%>
-                  <% end%>
-                <% end %>
-              <% end %>
-              <%= link_to image_tag('comment.png',class:"icon"), post %>
-              <br>
-            </div>
-            <p class="caption"><%= post.caption %></p>
-          </div>
+    <% if !current_user.followers.any? %>
+      <div class="panel panel-danger">
+        <div class="panel-body no_follow">
+          Follow users to view their posts
         </div>
+      </div>
+    <% else %>
+      <% @posts = Post.all%>
+      <% @posts.each do |post|%>
+        <% @user =User.find(post.user_id) %>
+        <% if @user!=current_user%>
+          <% if current_user.following?(@user)%>
+            <div class="panel panel-danger">
+              <div class="panel-heading"style="background-color:#f5dff2">
+                <%= image_tag select_avatar(@user), class:"img-circle img-thumbnail user_image"%>
+                <%= @user.username%>
+              </div>
+              <div class="panel-body">
+                <div class="row center-block">
+                  <% if post.images.attached?%>
+                    <%= link_to image_tag(post.images.first, class:"feed_image img-rounded"), post, class:"link" %>
+                  <% end %>
+                  <% like = current_user.likes.find_by(post: post)%>
+                  <% if like.nil? %>
+                    <% if policy(@user).user_exist? %>
+                      <%= button_to likes_path, params: {like: {post_id: post.id}}, method: :post, class:"like-btn" do %>
+                        <%= image_tag('like.png',class:"icon")%>
+                      <% end%>
+                    <% end %>
+                  <% else %>
+                    <% if policy(like).destroy? %>
+                      <%= button_to like_path(like), method: :delete, class:"like-btn" do %>
+                        <%= image_tag('nlike.png',class:"icon")%>
+                      <% end%>
+                    <% end %>
+                  <% end %>
+                  <%= link_to image_tag('comment.png',class:"icon"), post %>
+                  <br>
+                </div>
+                <p class="caption"><%= post.caption %></p>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
       <% end %>
     <% end %>
   </div>

@@ -3,9 +3,7 @@
     <div>
         <div class="row center-block" style="width:1000px">
             <div class="col-md-3 col-md-offset-2">
-                <% if current_user.avatar.attached? %>
-                    <%= image_tag current_user.avatar, class:"avatar img-circle img-thumbnail"%>
-                <% end %>
+                <%= image_tag select_avatar(current_user), class:"avatar img-circle img-thumbnail"%>
             </div>
             <div class="col-md-3 col-md-offset-2">
                 <h3><%= current_user.username%></h3>

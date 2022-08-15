@@ -8,11 +8,15 @@ class PostPolicy < ApplicationPolicy
   end
 
   def new?
-    user.present?
+    @user.present?
+  end
+
+  def show?
+    @user.present?
   end
 
   def create?
-    user.present?
+    @record.present?
   end
 
   def update?
