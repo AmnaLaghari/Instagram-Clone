@@ -1,0 +1,27 @@
+<div class="row center-block" style="width:1000px">
+        <div class="col-md-3 col-md-offset-2">
+            <%= image_tag select_avatar(@user), :width=>200, :height=>300, :crop=>"fill", class:"img-circle img-thumbnail"%>
+        </div>
+        <div class="col-md-3 col-md-offset-2">
+            <h3><%= @user.username%></h3>
+            <h4><%= @user.full_name%></h4>
+            <h5><%= @user.bio%></h5>
+            <% if current_user.following?(@user) %>
+                <% if policy(@user).user_exist?%>
+                    <h5><%= button_to "Unfollow", relationships_path(user_id: @user.id), method: :delete, :class => "btn btn default" %></h5>
+                <%end%>
+            <% elsif requested?(current_user.sent_requests,@user)  %>
+                Requested
+            <% else %>
+                <% if @user.privacy ==  'Public'%>
+                    <% if policy(@user).user_exist? %>
+                        <h5><%= button_to "Follow", relationships_path(user_id: @user.id), :class => "btn btn default" %></h5>
+                    <% end %>
+                <% else %>
+                    <% if policy(@user).user_exist? %>
+                        <h5><%= button_to "Follow", requests_path(reciever_id: @user.id), method: :post, :class => "btn btn default" %></h5>
+                    <% end %>
+                <% end%>
+            <% end %>
+        </div>
+    </div>

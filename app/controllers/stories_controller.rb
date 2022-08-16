@@ -4,13 +4,11 @@ class StoriesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_story, only: %i[show destroy]
   before_action :set_user, only: %i[new show destroy]
-
-  after_action :verify_authorized, except: :index
-  after_action :verify_policy_scoped, only: :index
+  after_action :verify_authorized
 
   def index
     @stories = Story.all
-    @stories = policy_scope(Story).reverse
+    authorize @stories
   end
 
   def new

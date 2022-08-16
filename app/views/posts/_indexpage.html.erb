@@ -1,0 +1,21 @@
+<div class="panel panel-danger">
+        <div class="panel-heading text-center"style="background-color:#f5dff2">Posts</div>
+        <div class="panel-body">
+            <div class="row center-block">
+                <div class="col">
+                    <% if current_user.posts.any? %>
+                        <% @posts.each do |post| %>
+                        <%if post.user == current_user%>
+                            <% if post.images.attached?%>
+                                <%= link_to image_tag(post.images.first, class:"post_image img-rounded"), post, class:"link" %>
+                            <% end %>
+                        <% end %>
+                        <% end %>
+                    <% else %>
+                        <h5 class="no_post">No post yet</h5>
+                    <% end %>
+
+                </div>
+            <div>
+        </div>
+    </div>

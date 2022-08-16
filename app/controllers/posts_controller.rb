@@ -2,14 +2,13 @@
 
 class PostsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_post, only: %i[show edit update destroy]
-
-  after_action :verify_authorized, except: :index
-  after_action :verify_policy_scoped, only: :index
+  before_action :set_post, only: %i[edit update destroy]
+  before_action :private_user, only: %i[show]
+  after_action :verify_authorized
 
   def index
     @posts = Post.all
-    @posts = policy_scope(Post).reverse
+    authorize @posts
   end
 
   def edit; end
@@ -50,6 +49,16 @@ class PostsController < ApplicationController
   end
 
   private
+
+  def private_user
+    set_post()
+    @user = User.find(@post.user_id)
+    if current_user != @user
+      if @user.privacy == 'Private' && !current_user.following?(@user)
+        redirect_to user_path(@user.id), notice: "This user is private you cannot view their post."
+      end
+    end
+  end
 
   def set_post
     @post = Post.find(params[:id])

@@ -12,8 +12,8 @@ class RequestsController < ApplicationController
   end
 
   def accept_request
-    @user = User.find(params[:requester_id])
-    current_user.followed_users.create(followee_id: @user.id)
+    @user = User.find(params[:sender_id])
+    current_user.following_users.create(follower_id: @user.id)
     redirect_to user_path(@user.id)
   end
 

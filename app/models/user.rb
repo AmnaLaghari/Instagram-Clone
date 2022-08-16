@@ -29,7 +29,7 @@ class User < ApplicationRecord
   end
 
   def following?(user)
-    followers.include?(user)
+    followee.include?(user)
   end
 
   def send_request(user)

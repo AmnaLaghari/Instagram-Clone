@@ -7,7 +7,7 @@ class LikesController < ApplicationController
   def create
     @like = current_user.likes.new(like_params)
     authorize @like
-    flash[:notice] = @like.errors.full_messages.to_sentence unless @like.save
+    flash[:notice] = "Post not liked successfully #{@like.errors.full_messages.to_sentence}" unless @like.save
     respond_to do |format|
       format.html { redirect_back fallback_location: users_path }
     end
@@ -15,14 +15,16 @@ class LikesController < ApplicationController
 
   def destroy
     @like = current_user.likes.find(params[:id])
-    post = @like.post
     authorize @like
-    @like.destroy
-    respond_to do |format|
-      format.html { redirect_back fallback_location: users_path }
+    if @like.destroy
+      respond_to do |format|
+        format.html { redirect_back fallback_location: users_path }
+      end
+    else
+      redirect_back fallback_location: users_path, notice: "Post is not unliked successfully. #{@like.errors.full_messages.to_sentence}"
+
     end
   end
-
   private
 
   def like_params

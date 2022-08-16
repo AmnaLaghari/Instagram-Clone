@@ -2,16 +2,9 @@
 
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_post, only: %i[show edit update destroy]
+  before_action :set_post, only: %i[create show edit update destroy]
   before_action :set_comment, only: %i[show edit update destroy]
-
-  after_action :verify_authorized, except: :index
-  after_action :verify_policy_scoped, only: :index
-
-  def index
-    @comments = Comment.all
-    @comments = policy_scope(Comment).reverse
-  end
+  after_action :verify_authorized
 
   def show; end
 
@@ -23,7 +16,6 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @post = Post.find(params[:post_id])
     @comment = @post.comments.create(comment_params)
     authorize @comment
     if @comment.save
