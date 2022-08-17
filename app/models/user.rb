@@ -20,10 +20,6 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :stories, dependent: :destroy
 
-  # def follow(user)
-  #   following_users.create(follower_id: user.id)
-  # end
-
   def unfollow(user)
     followed_users.find_by(followee_id: user.id).destroy
   end
@@ -33,7 +29,10 @@ class User < ApplicationRecord
   end
 
   def send_request(user)
-    sent_requests.create(reciever_id: user.id)
+    @request = sent_requests.new(reciever_id: user.id)
+    if @request.save!
+      errors[:base]<< "Request not sent successfully"
+    end
   end
 
   def delete_request(user)

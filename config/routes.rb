@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   get 'search', to: 'search#index'
-  post "requests/accept_request", to: "requests#accept_request", as: "accept_req"
+  post 'requests/accept_request', to: 'requests#accept_request', as: 'accept_req'
   devise_for :users
   resources :home, only: %i[index]
   resource :relationships, only: %i[create destroy]

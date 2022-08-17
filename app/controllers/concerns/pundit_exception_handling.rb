@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PunditExceptionHandling
   extend ActiveSupport::Concern
 
@@ -8,6 +10,6 @@ module PunditExceptionHandling
   private
 
   def handle_authorization_error
-    redirect_to root_url, alert: "You dont have access to this page"
+    redirect_to root_url, alert: 'You dont have access to this page'
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RequestsHelper
   def requested?(requests, user)
     requests.each do |request|

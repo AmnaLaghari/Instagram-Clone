@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class CommentsController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_post, only: %i[create show edit update destroy]
   before_action :set_comment, only: %i[show edit update destroy]
   after_action :verify_authorized
@@ -16,7 +15,7 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @comment = @post.comments.create(comment_params)
+    @comment = @post.comments.new(comment_params)
     authorize @comment
     if @comment.save
       redirect_to post_path(@post.id), notice: 'comment was successfully created.'

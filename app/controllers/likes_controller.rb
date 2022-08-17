@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class LikesController < ApplicationController
-  before_action :authenticate_user!
   after_action :verify_authorized
 
   def create
@@ -21,10 +20,11 @@ class LikesController < ApplicationController
         format.html { redirect_back fallback_location: users_path }
       end
     else
-      redirect_back fallback_location: users_path, notice: "Post is not unliked successfully. #{@like.errors.full_messages.to_sentence}"
-
+      redirect_back fallback_location: users_path,
+                    notice: "Post is not unliked successfully. #{@like.errors.full_messages.to_sentence}"
     end
   end
+
   private
 
   def like_params

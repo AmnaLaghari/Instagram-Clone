@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 
 class StoriesController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_story, only: %i[show destroy]
-  before_action :set_user, only: %i[new show destroy]
+  before_action :set_user, only: %i[index new show destroy]
+  before_action :private_user, only: %i[index show]
   after_action :verify_authorized
+
 
   def index
     @stories = Story.all
-    authorize @stories
+    authorize @user
   end
 
   def new
@@ -39,7 +40,6 @@ class StoriesController < ApplicationController
   end
 
   private
-
   def story_params
     params.require(:story).permit(:user_id, images: [])
   end
@@ -51,5 +51,12 @@ class StoriesController < ApplicationController
 
   def set_user
     @user = User.find(params[:user_id])
+  end
+
+  def private_user
+    set_user
+    if current_user != @user && (@user.privacy == 'Private' && !current_user.following?(@user))
+      redirect_back fallback_location: users_path, notice: 'This user is private you cannot view their stories'
+    end
   end
 end

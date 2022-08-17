@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.configure do
-
   config.cache_classes = true
 
   config.eager_load = true
@@ -10,7 +9,6 @@ Rails.application.configure do
   config.action_controller.perform_caching = true
 
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
-
 
   config.assets.js_compressor = :uglifier
 
@@ -22,14 +20,11 @@ Rails.application.configure do
 
   config.log_tags = [:request_id]
 
-
   config.action_mailer.perform_caching = false
-
 
   config.i18n.fallbacks = true
 
   config.active_support.deprecation = :notify
-
 
   config.log_formatter = ::Logger::Formatter.new
 
@@ -44,12 +39,12 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'instagram-clone-amna.herokuapp.com' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
+    address: 'smtp.gmail.com',
     port: 587,
-    domain: "mail.google.com",
+    domain: 'mail.google.com',
     user_name: Rails.application.credentials[:user_name],
     password: Rails.application.credentials[:password],
-    authentication: "plain",
-    enable_starttls_auto: true,
+    authentication: 'plain',
+    enable_starttls_auto: true
   }
 end

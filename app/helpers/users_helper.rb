@@ -9,6 +9,7 @@ module UsersHelper
 
   def select_avatar(user)
     return user.avatar if user.avatar.attached?
+
     'user.png'
   end
 end

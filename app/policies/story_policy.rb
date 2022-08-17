@@ -1,9 +1,7 @@
+# frozen_string_literal: true
+
 class StoryPolicy < ApplicationPolicy
   class Scope < Scope
-    # NOTE: Be explicit about which records you allow access to!
-    # def resolve
-    #   scope.where(user_id: @user.try(:id))
-    # end
   end
 
   def index

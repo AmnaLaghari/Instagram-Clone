@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_post, only: %i[edit update destroy]
+  before_action :set_post, only: %i[edit update destroy private_user]
   before_action :private_user, only: %i[show]
   after_action :verify_authorized
 
@@ -51,12 +50,10 @@ class PostsController < ApplicationController
   private
 
   def private_user
-    set_post()
+    set_post
     @user = User.find(@post.user_id)
-    if current_user != @user
-      if @user.privacy == 'Private' && !current_user.following?(@user)
-        redirect_to user_path(@user.id), notice: "This user is private you cannot view their post."
-      end
+    if current_user != @user && (@user.privacy == 'Private' && !current_user.following?(@user))
+      redirect_to user_path(@user.id), notice: 'This user is private you cannot view their post.'
     end
   end
 
