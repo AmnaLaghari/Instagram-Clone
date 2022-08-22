@@ -9,7 +9,9 @@ class LikesController < ApplicationController
     authorize @like
     authorize @post
     if @like.save
-      render 'create'
+      respond_to do |format|
+        format.js { render 'create' }
+      end
     else
       flash[:notice] = @like.errors.full_messages.to_sentence.to_s
     end
@@ -19,7 +21,9 @@ class LikesController < ApplicationController
     @like = current_user.likes.find(params[:id])
     authorize @like
     if @like.destroy
-      redirect_back fallback_location: users_path
+      respond_to do |format|
+        format.html { redirect_back fallback_location: users_path }
+      end
     else
       redirect_back fallback_location: users_path,
                     notice: @like.errors.full_messages.to_sentence.to_s
