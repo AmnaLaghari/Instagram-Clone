@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-u1 = User.find_or_create_by(full_name: 'Amna Laghari', email: 'amna@gmail.com', username: 'amna2101',
+u1 = User.find_or_create_by(full_name: 'Amna Laghari', email: 'amna.laghari243@gmail.com', username: 'amna2101',
                             privacy: 'Private') do |user|
   user.password = '123456'
 end
 u1.skip_confirmation!
 u1.save!
 
-u2 = User.find_or_create_by(full_name: 'meenu', email: 'meenu@gmail.com', username: 'meenu',
+u2 = User.find_or_create_by(full_name: 'meenu', email: 'amna.laghari@devsinc.com', username: 'meenu',
                             privacy: 'Private') do |user|
   user.password = '123456'
 end
