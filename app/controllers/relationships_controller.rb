@@ -2,9 +2,12 @@
 
 class RelationshipsController < ApplicationController
   before_action :set_user
+  after_action :verify_authorized
 
   def create
-    if current_user.followed_users.create(followee_id: @user.id)
+    @relationship = current_user.followed_users.new(followee_id: @user.id)
+    authorize @relationship
+    if @relationship.save
       redirect_to user_url(@user.id), notice: 'You have started following this user.'
     else
       redirect_to user_url(@user.id),
@@ -13,7 +16,9 @@ class RelationshipsController < ApplicationController
   end
 
   def destroy
-    if current_user.followed_users.find_by(followee_id: @user.id).destroy
+    @relationship = current_user.followed_users.find_by(followee_id: @user.id)
+    authorize @relationship
+    if @relationship.destroy
       redirect_to user_url(@user.id), notice: 'You are now not following this user.'
     else
       redirect_to user_url(@user.id),

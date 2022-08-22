@@ -52,9 +52,9 @@ class PostsController < ApplicationController
   def private_user
     set_post
     @user = User.find(@post.user_id)
-    if current_user != @user && (@user.privacy == 'Private' && !current_user.following?(@user))
-      redirect_to user_path(@user.id), notice: 'This user is private you cannot view their post.'
-    end
+    return unless current_user != @user && (@user.privacy == 'Private' && !current_user.following?(@user))
+
+    redirect_to user_path(@user.id), notice: 'This user is private you cannot view their post.'
   end
 
   def set_post

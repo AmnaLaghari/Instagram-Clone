@@ -19,10 +19,9 @@ class StoriesController < ApplicationController
   def show; end
 
   def create
-    @story = @user.stories.create(story_params)
+    @story = @user.stories.new(story_params)
     authorize @story
     if @story.save
-      DeleteStoriesJob.set(wait: 1.day).perform_later(@story.id)
       redirect_to users_url, notice: 'story is successfuly created'
     else
       redirect_to new_user_story_url, notice: @story.errors.full_messages.to_sentence.to_s

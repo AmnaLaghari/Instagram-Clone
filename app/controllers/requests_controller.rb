@@ -9,10 +9,12 @@ class RequestsController < ApplicationController
 
   def index
     @requests = Request.all
+    authorize @requests
   end
 
   def create
     @request = current_user.sent_requests.new(reciever_id: @user.id)
+    authorize @request
     if @request.save
       redirect_to user_path(@user.id), notice: 'Request sent successfully'
     else
@@ -42,9 +44,9 @@ class RequestsController < ApplicationController
   private
 
   def check_request
-    if current_user.sent_requests.include?(@user)
-      redirect_to user_path(@user.id), notice: 'You have already requested to follow this user.'
-    end
+    return unless current_user.sent_requests.include?(@user)
+
+    redirect_to user_path(@user.id), notice: 'You have already requested to follow this user.'
   end
 
   def check_follow

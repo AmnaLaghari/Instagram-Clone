@@ -13,6 +13,10 @@ AllCops:
     - 'node_modules/**/*'
     - 'vendor/bundle/**/*'
     - 'bin/**/*'
+    - 'db/migrate/**/*'
+    - 'config/initializers/**/*'
+    - 'config/environments/**/*'
+
 
 Layout/LineLength:
   Max: 120
