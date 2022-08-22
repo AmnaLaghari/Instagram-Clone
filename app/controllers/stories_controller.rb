@@ -2,14 +2,13 @@
 
 class StoriesController < ApplicationController
   before_action :set_story, only: %i[show destroy]
-  before_action :set_user, only: %i[index new show destroy]
-  before_action :private_user, only: %i[index show]
+  before_action :set_user, only: %i[index new show destroy create]
   after_action :verify_authorized
-
+  before_action :check_user, only: [:new]
 
   def index
-    @stories = Story.all
-    authorize @user
+    @stories = Story.all.user_stories(params[:user_id])
+    authorize @stories
   end
 
   def new
@@ -20,7 +19,6 @@ class StoriesController < ApplicationController
   def show; end
 
   def create
-    @user = User.find(params[:user_id])
     @story = @user.stories.create(story_params)
     authorize @story
     if @story.save
@@ -40,6 +38,7 @@ class StoriesController < ApplicationController
   end
 
   private
+
   def story_params
     params.require(:story).permit(:user_id, images: [])
   end
@@ -53,10 +52,10 @@ class StoriesController < ApplicationController
     @user = User.find(params[:user_id])
   end
 
-  def private_user
+  def check_user
     set_user
-    if current_user != @user && (@user.privacy == 'Private' && !current_user.following?(@user))
-      redirect_back fallback_location: users_path, notice: 'This user is private you cannot view their stories'
-    end
+    return true if @user.eql? current_user
+
+    redirect_to users_path, notice: 'You are not authorized to perform this action'
   end
 end

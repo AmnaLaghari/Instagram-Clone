@@ -5,36 +5,28 @@ class PostPolicy < ApplicationPolicy
   end
 
   def index?
-    user.present?
-  end
-
-  def new?
-    @user.present?
+    user_exist?
   end
 
   def show?
-    @user.present?
+    if user_exist? && record_not_nil? && (@user.following?(@record.user) || !check_private? || @user == @record.user)
+      true
+    end
   end
 
   def create?
-    @record.present?
+    return true if record_not_nil? && user_exist?
   end
 
   def update?
-    user_is_owner_ofrecord?
+    return true if user_exist? && record_not_nil? && user_is_owner_ofrecord?
   end
 
   def destroy?
-    user_is_owner_ofrecord?
+    return true if user_exist? && record_not_nil? && user_is_owner_ofrecord?
   end
 
   def destroy_comment?
-    user == @record.user
-  end
-
-  private
-
-  def user_is_owner_ofrecord?
     user == @record.user
   end
 end

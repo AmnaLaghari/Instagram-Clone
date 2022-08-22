@@ -1,38 +1,39 @@
+# frozen_string_literal: true
+
 class RequestsController < ApplicationController
+  include RequestsHelper
   before_action :set_user, only: %i[check_request destroy create check_follow]
   before_action :check_request, only: [:create]
-  before_action :check_follow, only: [:accept_request]
+  before_action :check_follow, only: [:edit]
+  before_action :set_request, only: [:edit]
 
   def index
     @requests = Request.all
   end
 
   def create
-    if current_user.send_request(@user)
+    @request = current_user.sent_requests.new(reciever_id: @user.id)
+    if @request.save
       redirect_to user_path(@user.id), notice: 'Request sent successfully'
     else
-      redirect_to user_path(@user.id), notice: "Request cannot be send due to some issue."
+      redirect_to user_path(@user.id),
+                  notice: @request.errors.full_messages.to_sentence.to_s
     end
   end
 
-  def accept_request
-    @user = User.find(params[:sender_id])
-    ActiveRecord::Base.transaction do
-      if current_user.following_users.create!(follower_id: @user.id)
-        @user.delete_request(current_user)
-        redirect_to user_path(@user.id), notice: 'Request accepted successfully'
-      else
-        redirect_to user_path(@user.id), notice: "Request was not accepted successfully.#{followed_users.errors.full_messages.to_sentence}"
-      end
+  def edit
+    @user = User.find(@request.sender_id)
+    if current_user.accept_request(@user)
+      redirect_to user_path(@user.id), notice: 'Request accepted successfully'
+    else
+      redirect_to user_path(@user.id),
+                  notice: followed_users.errors.full_messages.to_sentence.to_s
     end
-    rescue ActiveRecord::RecordInvalid
-      redirect_to user_path(@user.id), notice: 'Something went wrong.'
   end
 
   def destroy
-
     if current_user.delete_request(@user)
-      redirect_to user_path(@user.id)
+      redirect_to user_path(@user.id), notice: 'Request deleted successfully'
     else
       redirect_to user_path(@user.id), notice: 'Request was not deleted due to some issue.'
     end
@@ -47,12 +48,14 @@ class RequestsController < ApplicationController
   end
 
   def check_follow
-    if current_user.following?(@user)
-      redirect_to user_path(@user.id), notice: 'You are already following this user'
-    end
+    redirect_to user_path(@user.id), notice: 'You are already following this user' if current_user.following?(@user)
   end
 
   def set_user
     @user = User.find(params[:reciever_id])
+  end
+
+  def set_request
+    @request = Request.find(params[:id])
   end
 end

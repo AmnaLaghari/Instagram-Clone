@@ -7,22 +7,24 @@ class CommentPolicy < ApplicationPolicy
   attr_reader :post, :record
 
   def index?
-    user.present?
+    return true if user_exist? && record_not_nil?
   end
 
   def new?
-    user.present?
+    return true if user_exist? && record_not_nil? && @user.following?(@post.user)
   end
 
   def create?
-    user.present?
+    if user_exist? && record_not_nil? && (@user.following?(@post.user) || !check_private? || user_is_owner_ofrecord?)
+      true
+    end
   end
 
   def update?
-    user == @record.user
+    return true if user_exist? && record_not_nil? && user_is_owner_ofrecord?
   end
 
   def destroy?
-    return true if user.present? && user == @record.user
+    return true if user_exist? && record_not_nil? && user_is_owner_ofrecord?
   end
 end

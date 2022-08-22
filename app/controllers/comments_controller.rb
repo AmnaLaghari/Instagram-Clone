@@ -16,9 +16,9 @@ class CommentsController < ApplicationController
 
   def create
     @comment = @post.comments.new(comment_params)
-    authorize @comment
+    authorize @post
     if @comment.save
-      redirect_to post_path(@post.id), notice: 'comment was successfully created.'
+      render 'create', flash: { notice: 'Comment Added!' }
     else
       redirect_to post_url(@post), notice: @comment.errors.full_messages.to_sentence.to_s
 

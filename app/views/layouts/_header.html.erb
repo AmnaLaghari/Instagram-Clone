@@ -13,25 +13,24 @@
       </a>
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
+        <ul class="nav navbar-nav navbar-right">
           <% if user_signed_in?%>
             <li>
-              <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "nav-link" if policy(current_user).user_exist?%>
+              <%= link_to 'Feed', users_path, class: "nav_links" if policy(current_user).user_exist?%>
             </li>
             <li class="nav-item">
-              <%= link_to 'Edit profile', edit_user_registration_path, class: "nav-link" if policy(current_user).user_exist?%>
-            </li>
-            <li>
-              <%= link_to 'home', users_path, class: "nav-link" if policy(current_user).user_exist?%>
+              <%= link_to 'Create story', new_user_story_path(user_id: current_user.id), class: "nav_links" if policy(current_user).user_exist? %>
             </li>
             <li class="nav-item">
-              <%= link_to 'Create story', new_user_story_path(user_id: current_user.id), class: "nav-link" if policy(current_user).user_exist? %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'Requests', requests_path, class: "nav-link" if policy(current_user).user_exist? %>
+              <%= link_to 'Requests', requests_path, class: "nav_links" if policy(current_user).user_exist? %>
             </li>
             <li>
               <%=link_to image_tag(select_avatar(current_user), :crop=>"fill",  class:"img-circle img-thumbnail user_image"), posts_path%>
+            </li>
+            <li>
+              <form class="navbar-form navbar-right">
+                <%= render 'search/form'%>
+              </form>
             </li>
           <% else %>
             <li class="nav-item">
@@ -42,9 +41,6 @@
             </li>
           <% end %>
         </ul>
-        <form class="navbar-form navbar-right">
-          <%= render 'search/form'%>
-        </form>
       </div>
     </div>
   </div>

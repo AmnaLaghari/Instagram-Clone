@@ -6,7 +6,7 @@
     <% end %>
   <% end %>
   <div class="form-group">
-    <%= form.text_field :content, class:"form-control", placeholder:"Comment" %>
+    <%= form.text_field :content, class:"form-control", placeholder:"Comment", required: true %>
   </div>
   <div class="field form-group">
     <%= form.number_field :user_id,id: :comment_user_id,class:"form-control",value: current_user.id, type: :hidden %>

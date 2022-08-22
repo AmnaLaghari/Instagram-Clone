@@ -1,0 +1,14 @@
+<% like = current_user.likes.find_by(post: @post)%>
+<% if like.nil? %>
+  <% if policy(@user).user_exist? %>
+    <%= button_to likes_path, params: {like: {post_id: @post.id}}, method: :post, remote: true, class:"like-btn" do %>
+      <%= image_tag('like.png',class:"icon")%>
+    <% end%>
+  <%end%>
+<% else %>
+  <% if policy(like).destroy? %>
+    <%= button_to like_path(like), method: :delete, remote: true, class:"like-btn" do %>
+      <%= image_tag('nlike.png',class:"icon")%>
+    <% end%>
+  <%end%>
+<% end %>

@@ -1,17 +1,33 @@
 
 <div class="container">
     <div>
-        <div class="row center-block" style="width:1000px">
+        <div class="row center-block">
             <div class="col-md-3 col-md-offset-2">
                 <%= image_tag select_avatar(current_user), class:"avatar img-circle img-thumbnail"%>
             </div>
-            <div class="col-md-3 col-md-offset-2">
-                <h3><%= current_user.username%></h3>
-                <h4><%= current_user.full_name%></h4>
-                <h5><%= current_user.bio%></h5>
-                <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "btn btn-default" %>
-                <%= link_to 'Edit profile', edit_user_registration_path, class: "btn btn-default" %>
-                <%= link_to 'Add new post', new_post_path, class: "btn btn-default" if policy(current_user).user_exist? %>
+            <div class="col-md-4">
+                <div class="row">
+                    <div class = "col-md-4 text-center index-font">
+                        <%= current_user.posts.count%><br>
+                        <h4>Posts</h4>
+                    </div>
+                    <div class = "col-md-4 text-center index-font">
+                        <%= current_user.followee.count%><br>
+                        <h4>Following</h4>
+                    </div>
+                    <div class = "col-md-4 text-center index-font">
+                        <%= current_user.followers.count%><br>
+                        <h4>Followers</h4>
+                    </div>
+                </div>
+                <div class="row center-block">
+                    <h3><%= current_user.username%></h3>
+                    <h4><%= current_user.full_name%></h4>
+                    <h5><%= current_user.bio%></h5>
+                    <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "btn btn-default" %>
+                    <%= link_to 'Edit profile', edit_user_registration_path, class: "btn btn-default" %>
+                    <%= link_to 'Add new post', new_post_path, class: "btn btn-default" if policy(current_user).user_exist? %>
+                 </div>
             </div>
         </div>
     </div>

@@ -36,6 +36,26 @@ class ApplicationPolicy
     false
   end
 
+  def user_exist?
+    !@user.eql? nil
+  end
+
+  def record_not_nil?
+    !@record.nil?
+  end
+
+  def record_not_empty?
+    !record.empty?
+  end
+
+  def check_private?
+    @record.user.privacy == 'Private'
+  end
+
+  def user_is_owner_ofrecord?
+    @user.eql? @record.user
+  end
+
   class Scope
     def initialize(user, scope)
       @user = user

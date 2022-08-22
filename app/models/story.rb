@@ -5,6 +5,7 @@ class Story < ApplicationRecord
   has_many_attached :images, dependent: :destroy
   validate :correct_image_type
   validates :images, presence: true
+  scope :user_stories, ->(id) { where(user_id: id) }
 
   private
 

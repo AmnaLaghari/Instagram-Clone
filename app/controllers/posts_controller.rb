@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[edit update destroy private_user]
+  before_action :set_post, only: %i[edit update destroy]
   before_action :private_user, only: %i[show]
   after_action :verify_authorized
 

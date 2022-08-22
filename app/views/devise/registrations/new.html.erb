@@ -6,31 +6,33 @@
 
     <div class="form-group">
       <br />
-      <%= f.email_field :email, class:"form-control", autofocus: true, autocomplete: "email", placeholder:"Email"%>
+      <%= f.email_field :email, class:"form-control", autofocus: true, autocomplete: "email", placeholder:"Email", required: true %>
     </div>
 
     <div class="form-group">
-      <%= f.text_field :username, class:"form-control", autocomplete: "username", placeholder:"Username"%>
+      <%= f.text_field :username, class:"form-control", autocomplete: "username", placeholder:"Username", required: true %>
     </div>
 
     <div class="form-group">
-      <%= f.text_field :full_name, class:"form-control", autocomplete: "full_name", placeholder:"Full name"%>
+      <%= f.text_field :full_name, class:"form-control", autocomplete: "full_name", placeholder:"Full name",required: true %>
     </div>
 
     <div class="form-group">
-      <%= f.text_area :bio, class:"form-control", autocomplete: "bio", placeholder:"Bio"%>
+      <%= f.text_area :bio, class:"form-control", autocomplete: "bio", placeholder:"Bio", required: true %>
     </div>
 
     <div class="form-group">
       <% if @minimum_password_length %>
       <em>(<%= @minimum_password_length %> characters minimum)</em>
       <% end %><br />
-      <%= f.password_field :password, class:"form-control", autocomplete: "new-password", placeholder:"Password"%>
+      <%= f.password_field :password, class:"form-control", id:"password", autocomplete: "new-password", placeholder:"Password", required: true %>
     </div>
 
     <div class="form-group">
-      <%= f.password_field :password_confirmation, class:"form-control", autocomplete: "new-password", placeholder:"Confirm Password"%>
+      <%= f.password_field :password_confirmation, class:"form-control", id:"confirm_password", autocomplete: "new-password", placeholder:"Confirm Password", required: true, :onkeyup => 'check();' %>
+      <p id = "message"></p>
     </div>
+
 
     <div class="form-group">
       <%= f.file_field :avatar, class:"form-control", type:"file", id:"formFile", accept: 'image/*' %>

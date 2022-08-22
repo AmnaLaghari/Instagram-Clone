@@ -5,14 +5,10 @@ class UserPolicy < ApplicationPolicy
   end
 
   def index?
-    user.present?
+    user_exist?
   end
 
   def show?
-    user.present?
-  end
-
-  def user_exist?
-    user.present?
+    user_exist?
   end
 end

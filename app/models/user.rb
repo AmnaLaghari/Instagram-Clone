@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_one_attached :avatar
   validates :username, :full_name, :privacy, presence: true
   validates :username, uniqueness: true
-  validates :password, confirmation: true
+  validate :confrim_passowrd
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable
@@ -20,22 +20,34 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :stories, dependent: :destroy
 
-  def unfollow(user)
-    followed_users.find_by(followee_id: user.id).destroy
-  end
-
   def following?(user)
-    followee.include?(user)
+    return true if followee.include?(user)
+
+    errors[:base] << 'You are not following this user'
   end
 
-  def send_request(user)
-    @request = sent_requests.new(reciever_id: user.id)
-    if @request.save!
-      errors[:base]<< "Request not sent successfully"
+  def accept_request(user)
+    ActiveRecord::Base.transaction do
+      if following_users.create!(follower_id: user.id)
+        user.sent_requests.find_by(reciever_id: id).destroy
+        return true
+      end
     end
+  rescue ActiveRecord::RecordInvalid
+    errors[:base] << 'something went wrong'
   end
 
   def delete_request(user)
-    sent_requests.find_by(reciever_id: user.id).destroy
+    return true if sent_requests.find_by(reciever_id: user.id).destroy
+
+    errors[:base] << 'Request not deleted successfully'
+  end
+
+  private
+
+  def confrim_passowrd
+    return true if :password.eql? :password_confirmation
+
+    errors[:base] << 'Password doesnt match confirm password'
   end
 end

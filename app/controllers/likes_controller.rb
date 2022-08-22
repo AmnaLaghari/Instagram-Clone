@@ -5,10 +5,15 @@ class LikesController < ApplicationController
 
   def create
     @like = current_user.likes.new(like_params)
+    @post = @like.post
     authorize @like
-    flash[:notice] = "Post not liked successfully #{@like.errors.full_messages.to_sentence}" unless @like.save
-    respond_to do |format|
-      format.html { redirect_back fallback_location: users_path }
+    authorize @post
+    if @like.save
+      respond_to do |format|
+        format.js { render 'create' }
+      end
+    else
+      flash[:notice] = @like.errors.full_messages.to_sentence.to_s
     end
   end
 
@@ -21,7 +26,7 @@ class LikesController < ApplicationController
       end
     else
       redirect_back fallback_location: users_path,
-                    notice: "Post is not unliked successfully. #{@like.errors.full_messages.to_sentence}"
+                    notice: @like.errors.full_messages.to_sentence.to_s
     end
   end
 

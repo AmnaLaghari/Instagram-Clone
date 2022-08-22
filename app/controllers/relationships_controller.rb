@@ -8,16 +8,16 @@ class RelationshipsController < ApplicationController
       redirect_to user_url(@user.id), notice: 'You have started following this user.'
     else
       redirect_to user_url(@user.id),
-                  notice: "You were not able to folloe this user. #{@user.errors.full_messages.to_sentence}"
+                  notice: @user.errors.full_messages.to_sentence.to_s
     end
   end
 
   def destroy
-    if current_user.unfollow(@user)
+    if current_user.followed_users.find_by(followee_id: @user.id).destroy
       redirect_to user_url(@user.id), notice: 'You are now not following this user.'
     else
       redirect_to user_url(@user.id),
-                  notice: "You were not able to unfollow this user. Please try again.#{@user.errors.full_messages.to_sentence} "
+                  notice: @user.errors.full_messages.to_sentence.to_s
     end
   end
 

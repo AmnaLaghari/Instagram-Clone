@@ -5,7 +5,7 @@
     <%= render "devise/shared/error_messages", resource: resource %>
 
     <div class="form-group">
-      <%= f.email_field :email, class:"form-control", autofocus: true, autocomplete: "email", placeholder:"Email" %>
+      <%= f.email_field :email, class:"form-control", autofocus: true, autocomplete: "email", placeholder:"Email", required: true %>
     </div>
 
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
@@ -22,24 +22,24 @@
     </div>
 
     <div class="form-group">
-      <%= f.password_field :password_confirmation, class:"form-control", autocomplete: "new-password", placeholder:"Confirm Password"%>
+      <%= f.password_field :password_confirmation, class:"form-control", autocomplete: "new-password", placeholder:"Confirm Password" %>
     </div>
 
     <div class="form-group">
       <i>(we need your current password to confirm your changes)</i><br />
-      <%= f.password_field :current_password, class:"form-control", autocomplete: "current-password", placeholder:"Current Password"%>
+      <%= f.password_field :current_password, class:"form-control", autocomplete: "current-password", placeholder:"Current Password", required: true %>
     </div>
 
     <div class="form-group">
-      <%= f.text_field :username, class:"form-control", autocomplete: "username", placeholder:"Username"%>
+      <%= f.text_field :username, class:"form-control", autocomplete: "username", placeholder:"Username", required: true %>
     </div>
 
     <div class="form-group">
-      <%= f.text_field :full_name, class:"form-control", autocomplete: "full_name", placeholder:"Full name"%>
+      <%= f.text_field :full_name, class:"form-control", autocomplete: "full_name", placeholder:"Full name", required: true %>
     </div>
 
     <div class="form-group">
-      <%= f.text_area :bio, class:"form-control", autocomplete: "bio", placeholder:"Bio"%>
+      <%= f.text_area :bio, class:"form-control", autocomplete: "bio", placeholder:"Bio" %>
     </div>
 
     <div class="form-group">

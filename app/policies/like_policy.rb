@@ -5,10 +5,15 @@ class LikePolicy < ApplicationPolicy
   end
 
   def create?
-    user.present?
+    if user_exist? && record_not_nil? && (@user.following?(User.find(@record.user_id)) || !check_private? || user_is_owner_ofrecord?)
+      true
+    end
   end
 
   def destroy?
-    user.present?
+    true
+    # if user_exist? && record_not_empty?
+    #   return true if user_is_owner_ofrecord?
+    # end
   end
 end
