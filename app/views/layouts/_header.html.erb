@@ -28,9 +28,12 @@
               <%=link_to image_tag(select_avatar(current_user), :crop=>"fill",  class:"img-circle img-thumbnail user_image"), posts_path%>
             </li>
             <li>
-              <form class="navbar-form navbar-right">
-                <%= render 'search/form'%>
-              </form>
+              <%if user_signed_in?%>
+                <form class="form-inline my-2 my-lg-0" action="/search">
+                  <input class="form-control mr-sm-2" name="q" type="search" placeholder="Search" aria-label="Search", required="required">
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+              <%end%>
             </li>
           <% else %>
             <li class="nav-item">

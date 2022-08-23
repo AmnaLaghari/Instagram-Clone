@@ -1,9 +1,7 @@
 <div class="container">
   <%= form_with model: [@post, @comment], validate: true do |form| %>
     <% if @comment.errors.any? %>
-      <% @comment.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+      <%= render 'comments/errors', locals: {post: @comment} %>
     <% end %>
     <p>
       <%= form.text_area :content,class:"form-control" %>

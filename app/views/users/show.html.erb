@@ -1,7 +1,7 @@
 <div class="container">
     <%= render 'showpage',locals: {user: @user} %>
     <br/>
-    <% if current_user.following?(@user) %>
+    <% if current_user.following?(@user) || @user.privacy == "Public"%>
         <div class="panel panel-danger">
             <div class="panel-heading text-center"style="background-color:#f5dff2">Posts</div>
             <div class="panel-body">

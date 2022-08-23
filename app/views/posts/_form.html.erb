@@ -1,14 +1,8 @@
 <div class="container">
   <%= form_with(model: post, local: true) do |form| %>
     <% if post.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
-        <ul>
-        <% post.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-        </ul>
-      </div>
+      <% @post = post %>
+      <%= render 'posts/errors', locals: {post: post} %>
     <% end %>
     <div class="form-group">
       <%= form.text_field :caption, class:"form-control", placeholder:"Caption" %>

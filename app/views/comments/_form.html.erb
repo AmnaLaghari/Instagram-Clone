@@ -1,9 +1,7 @@
 <% @comment = @post.comments.build%>
 <%= form_with model: [ @post, @comment ] do |form| %>
   <% if @comment.errors.any? %>
-    <% @comment.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
+    <%= render 'comments/errors', locals: {post: @comment} %>
   <% end %>
   <div class="form-group">
     <%= form.text_field :content, class:"form-control", placeholder:"Comment", required: true %>

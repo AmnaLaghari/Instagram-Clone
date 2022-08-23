@@ -11,4 +11,8 @@ class UserPolicy < ApplicationPolicy
   def show?
     user_exist?
   end
+
+  def search?
+    user_exist?
+  end
 end

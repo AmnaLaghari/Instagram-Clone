@@ -2,12 +2,6 @@
 
 class User < ApplicationRecord
   has_one_attached :avatar
-  validates :username, :full_name, :privacy, presence: true
-  validates :username, uniqueness: true
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :confirmable
-
   has_many :posts, dependent: :destroy
   has_many :followed_users, foreign_key: :follower_id, class_name: 'Relationship', dependent: :destroy,
                             inverse_of: :follower
@@ -15,11 +9,20 @@ class User < ApplicationRecord
   has_many :following_users, foreign_key: :followee_id, class_name: 'Relationship', dependent: :destroy,
                              inverse_of: :followee
   has_many :followers, through: :following_users, source: :follower
-  has_many :recieved_requests, class_name: 'Request', foreign_key: :reciever_id, dependent: :destroy, inverse_of: :reciever
+  has_many :recieved_requests, class_name: 'Request', foreign_key: :reciever_id, dependent: :destroy,
+                               inverse_of: :reciever
   has_many :sent_requests, class_name: 'Request', foreign_key: :sender_id, dependent: :destroy, inverse_of: :sender
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :stories, dependent: :destroy
+
+  validates :username, :full_name, :privacy, presence: true
+  validates :username, uniqueness: true
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable,
+         :confirmable
+
+  scope :name_search, ->(name) { where('username ILIKE ?', "%#{name}%") }
 
   def following?(user)
     followee.include?(user)

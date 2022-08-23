@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
 class Story < ApplicationRecord
+  after_save :delete_story
+
   belongs_to :user
   has_many_attached :images, dependent: :destroy
+
   validate :correct_image_type
   validates :images, presence: true
+
   scope :user_stories, ->(id) { where(user_id: id) }
-  after_save :delete_story
 
   private
 

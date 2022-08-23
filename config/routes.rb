@@ -4,9 +4,10 @@ Rails.application.routes.draw do
   devise_for :users
   authenticated do
     root 'users#index'
-    resources :search, only: %i[index]
+    # resources :search, only: %i[index]
     resource :relationships, only: %i[create destroy]
     resources :likes, only: %i[create destroy]
+    get :search, controller: :users
     resources :requests, only: %i[create destroy index] do
       member do
         post :edit

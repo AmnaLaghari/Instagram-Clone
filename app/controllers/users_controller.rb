@@ -11,6 +11,11 @@ class UsersController < ApplicationController
 
   def show; end
 
+  def search
+    @users = User.name_search(params[:q])
+    authorize @users
+  end
+
   private
 
   def set_user
