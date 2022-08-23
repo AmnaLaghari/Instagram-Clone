@@ -2,7 +2,7 @@
   <h1>Editing Post</h1>
   <%= form_with(model: @post, local: true) do |form| %>
     <% if @post.errors.any? %>
-      <%= render 'layouts/errors', locals: {model1s: @post} %>
+      <%= render 'posts/errors', locals: {model1s: @post} %>
     <% end %>
     <div class="form-group">
       <%= form.text_field :caption, class:"form-control", placeholder:"Caption" %>

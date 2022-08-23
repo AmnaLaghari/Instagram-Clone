@@ -7,5 +7,5 @@
   <% if current_user == @user%>
     <%= link_to image_tag('edit.png',class:"icon_comment"), edit_post_comment_path(@post.id, comment.id) if policy(comment).update? %>
   <% end %>
-  <%= link_to image_tag('delete.png',class:"icon_comment"), post_comment_path(@post.id,comment.id), method: :delete, data: { confirm: 'Are you sure?' } if policy(comment).destroy? || policy(@post).destroy_comment?%>
+  <%= link_to image_tag('delete.png',class:"icon_comment"), post_comment_path(@post.id,comment.id), method: :delete, data: { confirm: 'Are you sure?' } if policy(comment).destroy?%>
 </div>
