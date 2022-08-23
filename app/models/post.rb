@@ -16,7 +16,7 @@ class Post < ApplicationRecord
 
     images.each do |image|
       unless image.content_type.in?(%w[image/jpeg image/png image/gif image/jpg])
-        errors[:base] << 'You tried uploading which is not jped/jpg/png.gif'
+        errors[:base] << 'You tried uploading which is not jpeg/jpg/png/gif'
       end
     end
   end
