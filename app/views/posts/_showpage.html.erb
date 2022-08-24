@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-md-7">
+    <% if @post.images.attached? %>
+      <% @post.images.each do |image|%>
+        <%= image_tag image ,class:"post_image_l border border-start"%>
+      <%end%>
+    <%end%>
+  </div>
+  <% @user = User.find(@post.user_id)%>
+  <div class="col-md-5">
+    <div class="fs-4 mt-3">
+      <%= image_tag select_avatar(@user), class:"img-circle img-thumbnail user_image"%>
+      <%= @user.username%>
+    </div>
+    <p class="post_caption">
+      <%= @post.caption%>
+    </p>
+    <p class="post_time text-right"><%= @post.created_at.strftime("#{@post.created_at.day.ordinalize} %B %Y") %> </p>
+    <%= link_to 'Edit', edit_post_path(@post), class:"btn btn-default" if policy(@post).update?%>
+    <%= link_to 'Destroy', @post, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-default" if policy(@post).destroy?%>
+    <div id='like_pane' >
+      <%= render 'likes/like', locals: {post: @post} %>
+    </div>
+    <br/>
+    <div class="panel panel-danger comment">
+      <div class="panel-heading" style="background-color:#f5dff2">Comments</div>
+      <div class="panel-body">
+        <div id='comment_pane' >
+          <%= render @post.comments %>
+        </div>
+        <br/>
+        <h4>Add a comment:</h4>
+        <%= render 'comments/form'  %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="feed">
+    <% @stories = Story.all%>
+    <% @users = User.all%>
+    <% @users.each do |user|%>
+      <% if current_user.following?(user) || user == current_user%>
+        <% if user.stories.any?%>
+          <%= link_to image_tag(select_avatar(user), :crop=>"fill",  class:"img-circle img-thumbnail stories_img"), user_stories_path(user_id: user.id ) %>
+        <% end %>
+      <% end %>
+    <% end %>
+    <% if !current_user.followee.any? %>
+      <div class="panel panel-danger">
+        <div class="panel-body no_follow">
+          Follow users to view their posts
+        </div>
+      </div>
+    <% else %>
+      <%= render 'feed' %>
+    <% end %>
+  </div>
+</div>

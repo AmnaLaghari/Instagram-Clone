@@ -1,0 +1,22 @@
+<div class="container">
+  <%= form_with model: [@post, @comment], validate: true do |form| %>
+    <% if @comment.errors.any? %>
+      <%= render 'comments/errors', locals: {post: @comment} %>
+    <% end %>
+    <p>
+      <%= form.text_area :content,class:"form-control" %>
+    </p>
+    <p class="actions">
+      <%= form.submit class:"btn btn-secondary" %>
+    </p>
+
+    <div class="field form-group">
+      <%= form.number_field :user_id,id: :comment_user_id,class:"form-control",value: @comment.user_id, type: :hidden %>
+    </div>
+
+    <div class="field form-group">
+      <%= form.number_field :post_id,id: :comment_post_id,class:"form-control",value: @post.id, type: :hidden %>
+    </div>
+
+  <% end %>
+</div>

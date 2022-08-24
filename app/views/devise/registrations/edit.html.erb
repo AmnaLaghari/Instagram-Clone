@@ -5,7 +5,7 @@
     <%= render "devise/shared/error_messages", resource: resource %>
 
     <div class="form-group">
-      <%= f.email_field :email, class:"form-control", autofocus: true, autocomplete: "email", placeholder:"Email" %>
+      <%= f.email_field :email, class:"form-control", autofocus: true, autocomplete: "email", placeholder:"Email", required: true %>
     </div>
 
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
@@ -22,35 +22,42 @@
     </div>
 
     <div class="form-group">
-      <%= f.password_field :password_confirmation, class:"form-control", autocomplete: "new-password", placeholder:"Confirm Password"%>
+      <%= f.password_field :password_confirmation, class:"form-control", autocomplete: "new-password", placeholder:"Confirm Password" %>
     </div>
 
     <div class="form-group">
       <i>(we need your current password to confirm your changes)</i><br />
-      <%= f.password_field :current_password, class:"form-control", autocomplete: "current-password", placeholder:"Current Password"%>
+      <%= f.password_field :current_password, class:"form-control", autocomplete: "current-password", placeholder:"Current Password", required: true %>
     </div>
 
     <div class="form-group">
-      <%= f.text_field :username, class:"form-control", autocomplete: "username", placeholder:"Username"%>
+      <%= f.text_field :username, class:"form-control", autocomplete: "username", placeholder:"Username", required: true %>
     </div>
 
     <div class="form-group">
-      <%= f.text_field :full_name, class:"form-control", autocomplete: "full_name", placeholder:"Full name"%>
+      <%= f.text_field :full_name, class:"form-control", autocomplete: "full_name", placeholder:"Full name", required: true %>
     </div>
 
     <div class="form-group">
-      <%= f.text_area :bio, class:"form-control", autocomplete: "bio", placeholder:"Bio"%>
+      <%= f.text_area :bio, class:"form-control", autocomplete: "bio", placeholder:"Bio" %>
     </div>
 
     <div class="form-group">
       <%if current_user.avatar.attached?%>
         <%= f.label :Change_Display_Picture %><br />
-        <%= image_tag current_user.avatar, :width=>150, :crop=>"fill"%>
+        <%= image_tag select_avatar(current_user), :width=>150, :crop=>"fill"%>
         <%= f.file_field :avatar, class:"form-control", type:"file", id:"formFile", accept: 'image/*' %>
       <%else%>
         <%= f.label :Choose_Display_Picture %><br />
         <%= f.file_field :avatar, class:"form-control", type:"file", id:"formFile" %>
       <%end%>
+    </div>
+
+    <div>
+      <%= f.radio_button :privacy, 'Private'%>
+      <%= f.label :privacy, "Private", :value => "Private"%>
+      <%= f.radio_button :privacy, 'Public'%>
+      <%= f.label :privacy, "Public", :value => "Public" %>
     </div>
 
     <div class="actions">

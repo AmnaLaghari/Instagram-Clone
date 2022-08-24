@@ -27,8 +27,21 @@
   font-size:12px
 }
 
+.comment{
+  margin-top: 50px;
+}
+
+
 .no_post{
   color:rgb(141, 26, 26);
   text-align: center;
 
+}
+
+.comment{
+  margin-top: 50px;
+}
+
+.index-font{
+  font-size: 18px;
 }

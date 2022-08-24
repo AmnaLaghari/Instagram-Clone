@@ -1,0 +1,20 @@
+<div class="container">
+    <%= render 'showpage',locals: {user: @user} %>
+    <br/>
+    <% if current_user.following?(@user) || @user.privacy == "Public"%>
+        <div class="panel panel-danger">
+            <div class="panel-heading text-center"style="background-color:#f5dff2">Posts</div>
+            <div class="panel-body">
+                <div class="row center-block">
+                    <div class="col">
+                        <% @user.posts.each do |post| %>
+                            <% if post.images.attached?%>
+                                <%= link_to image_tag(post.images.first, width:"350", height:"350", class:"img-rounded", :style=>'border:1px solid black; margin:5px'), post, class:"link" %>
+                            <% end %>
+                        <% end %>
+                    </div>
+                <div>
+            </div>
+        </div>
+    <% end %>
+</div>
