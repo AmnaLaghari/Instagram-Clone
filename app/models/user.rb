@@ -31,7 +31,7 @@ class User < ApplicationRecord
   def accept_request(user)
     ActiveRecord::Base.transaction do
       if following_users.create!(follower_id: user.id)
-        user.sent_requests.find_by(reciever_id: id).destroy
+        user.sent_requests.find_by(reciever_id: id).destroy!
         return true
       end
     end
