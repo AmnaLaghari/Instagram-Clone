@@ -36,7 +36,7 @@ class User < ApplicationRecord
       end
     end
   rescue ActiveRecord::RecordInvalid
-    errors[:base] << 'something went wrong'
+    errors[:base] << user.errors.to_s
   end
 
   def delete_request(user)

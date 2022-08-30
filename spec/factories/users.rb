@@ -3,10 +3,11 @@
 FactoryBot.define do
   factory :user do
     sequence(:id)
-    email { 'amna.laghari243@gmail.com' }
-    password { '123456' }
-    username { 'Amna2101' }
-    full_name { 'Amna Laghari' }
-    privacy { 'Public' }
+    username { Faker::Name.unique.name }
+    password { Faker::Internet.password(min_length: 6) }
+    full_name { Faker::Name.unique.name }
+    email { Faker::Internet.email }
+    after(:build, &:skip_confirmation_notification!)
+    after(:create, &:confirm)
   end
 end

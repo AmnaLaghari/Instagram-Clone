@@ -3,6 +3,16 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  let(:user) do
+    User.create(username: Faker::Name.unique.name, full_name: Faker::Name.name, email: Faker::Internet.email,
+                password: Faker::Internet.password(min_length: 6), privacy: 'Private')
+  end
+
+  let(:user2) do
+    User.create(username: Faker::Name.unique.name, full_name: Faker::Name.name, email: Faker::Internet.email,
+                password: Faker::Internet.password(min_length: 6), privacy: 'Private')
+  end
+
   context 'Associations' do
     it { is_expected.to have_many(:posts).dependent(:destroy) }
     it { is_expected.to have_many(:comments).dependent(:destroy) }
@@ -24,44 +34,45 @@ RSpec.describe User, type: :model do
   end
 
   context 'Scope' do
-    let(:user) { build :user }
-    it 'returns the users with matching full_name'do
-      expect(User.name_search(user.username).pluck(:username).eql? user.username)
+    it 'returns the users with matching full_name' do
+      expect(User.name_search(user.username).pluck(:username).eql?(user.username))
     end
   end
 
   context 'following?' do
-    let(:user) { build :user }
-    it 'check following' do
+    it 'should not follow itself' do
       expect(user.following?(user)).to eq(false)
+    end
+
+    it 'user should follow user2 as its relationship is created' do
+      user.followed_users.create(followee_id: user2.id)
+
+      expect(user.following?(user2)).to eq(true)
     end
   end
 
   context 'accept request' do
-    u1 = User.find(1)
-    u2 = User.find(2)
-    r = u2.sent_requests.new(reciever_id: u1.id)
-    r.save
     it 'should accept request' do
-      expect(u1.accept_request(u2)).to eq(true)
+      r = user2.sent_requests.new(reciever_id: user.id)
+      r.save
+
+      expect(user.accept_request(user2)).to eq(true)
     end
 
-    it 'should not accept request' do
-      u1.accept_request(u2)
-      expect(u1.accept_request(u2)).to include('something went wrong')
+    it 'should not accept request because it is accepted twice' do
+      r = user2.sent_requests.new(reciever_id: user.id)
+      r.save
+      user.accept_request(user2)
+
+      expect(user.accept_request(user2)).to include(user2.errors.to_s)
     end
   end
 
   context 'delete request' do
-    u1 = User.find(1)
-    u3 = User.find(3)
-    Request.create(sender_id: u1.id, reciever_id: u3.id)
     it 'should delete reuqest' do
-      expect(u1.delete_request(u3)).to eq(true)
-    end
+      Request.create(sender_id: user.id, reciever_id: user2.id)
 
-    # it 'should not delete reuqest' do
-    #   expect(u1.delete_request(u3)).to include('Request not deleted successfully')
-    # end
+      expect(user.delete_request(user2)).to eq(true)
+    end
   end
 end

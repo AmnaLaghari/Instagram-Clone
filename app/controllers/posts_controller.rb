@@ -32,7 +32,9 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to post_url(@post), notice: 'Post was successfully created.'
     else
-      redirect_to new_post_path, notice: "Post was not created due to some issue. Please try again. #{@post.errors.full_messages.to_sentence} ", status: :unprocessable_entity
+      redirect_to new_post_path,
+                  notice: "Post was not created due to some issue. Please try again.
+                  #{@post.errors.full_messages.to_sentence} ", status: :unprocessable_entity
     end
   end
 
@@ -40,7 +42,9 @@ class PostsController < ApplicationController
     if @post.update(post_params)
       redirect_to post_url(@post), notice: 'post was successfully updated.'
     else
-      redirect_to edit_post_path, notice: "Post was not successfully updated. Please try again. #{@post.errors.full_messages.to_sentence} ", status: :unprocessable_entity
+      redirect_to edit_post_path,
+                  notice: "Post was not successfully updated. Please try again.
+                  #{@post.errors.full_messages.to_sentence} ", status: :unprocessable_entity
     end
   end
 

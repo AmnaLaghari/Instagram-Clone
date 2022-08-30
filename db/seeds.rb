@@ -8,8 +8,8 @@ u1.skip_confirmation!
 u1.save!
 
 u4 = User.find_or_create_by(full_name: 'Ali', email: 'aali274297@gmail.com', username: 'ali791',
-  privacy: 'Private') do |user|
-user.password = '123456'
+                            privacy: 'Private') do |user|
+  user.password = '123456'
 end
 u4.skip_confirmation!
 u4.save!
