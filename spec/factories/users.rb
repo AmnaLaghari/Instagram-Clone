@@ -7,6 +7,7 @@ FactoryBot.define do
     password { Faker::Internet.password(min_length: 6) }
     full_name { Faker::Name.unique.name }
     email { Faker::Internet.email }
+    privacy { 'Private' }
     after(:build, &:skip_confirmation_notification!)
     after(:create, &:confirm)
   end

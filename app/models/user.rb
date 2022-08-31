@@ -17,7 +17,7 @@ class User < ApplicationRecord
   has_many :stories, dependent: :destroy
 
   validates :username, :full_name, :privacy, presence: true
-  validates :username, uniqueness: true
+  validates :username, uniqueness: { case_sensitive: false }
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable

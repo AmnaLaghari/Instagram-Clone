@@ -5,10 +5,7 @@ require 'spec_helper'
 require 'devise'
 
 RSpec.describe 'UsersControllers', type: :request do
-  let(:user) do
-    User.create(username: Faker::Name.unique.name, full_name: Faker::Name.name, email: Faker::Internet.email,
-                password: Faker::Internet.password(min_length: 6), privacy: 'Private')
-  end
+  let(:user) { create(:user) }
 
   before(:each) do
     user.skip_confirmation!

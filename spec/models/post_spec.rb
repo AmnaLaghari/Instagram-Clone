@@ -3,20 +3,16 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  let(:user) do
-    User.create(username: Faker::Name.unique.name, full_name: Faker::Name.name, email: Faker::Internet.email,
-                password: Faker::Internet.password(min_length: 6), privacy: 'Private')
-  end
-  let(:post1) do
-    Post.create(user_id: user.id, caption: Faker::Lorem.sentence,
-                images: [fixture_file_upload(Rails.root.join('spec/fixtures/home4.png'), 'image/png')])
-  end
-  let(:post2) do
-    Post.create(user_id: user.id, caption: Faker::Lorem.sentence,
-                images: [fixture_file_upload(Rails.root.join('spec/fixtures/home4.png'), 'image/png')])
-  end
+  let(:user) { create(:user) }
+  let(:post1) { create(:post, user: user) }
+  let(:post2) { create(:post, user: user) }
   let(:post3) do
     Post.new
+  end
+  let(:post4) do
+    build(:post, user: user, images: [fixture_file_upload(
+      Rails.root.join('spec/fixtures/Alchemist.webp'), 'image/png'
+    )])
   end
 
   context 'Associations' do
@@ -48,6 +44,14 @@ RSpec.describe Post, type: :model do
 
     it 'should validate images cannot be 0' do
       expect(post3.images.count >= 1).to eq(false)
+    end
+
+    it 'Image is valid as its type valid(png)' do
+      expect(post2).to be_valid
+    end
+
+    it 'Image is invalid as its type invalid(webp)' do
+      expect(post4).to_not be_valid
     end
   end
 end

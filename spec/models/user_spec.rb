@@ -3,15 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) do
-    User.create(username: Faker::Name.unique.name, full_name: Faker::Name.name, email: Faker::Internet.email,
-                password: Faker::Internet.password(min_length: 6), privacy: 'Private')
-  end
-
-  let(:user2) do
-    User.create(username: Faker::Name.unique.name, full_name: Faker::Name.name, email: Faker::Internet.email,
-                password: Faker::Internet.password(min_length: 6), privacy: 'Private')
-  end
+  let(:user) { create(:user) }
+  let(:user1) { create(:user, username: 'amna') }
+  let(:user3) { create(:user, username: 'AMNA') }
+  let(:user2) { create(:user) }
 
   context 'Associations' do
     it { is_expected.to have_many(:posts).dependent(:destroy) }
@@ -30,7 +25,13 @@ RSpec.describe User, type: :model do
   context 'validations' do
     it { is_expected.to validate_presence_of(:username) }
     it { is_expected.to validate_presence_of(:full_name) }
-    it { is_expected.to validate_uniqueness_of(:username) }
+    it 'should check uniqueness of username' do
+      expect(user1).to be_valid
+    end
+
+    it 'should check uniqueness of username' do
+      expect(user3).to be_valid
+    end
   end
 
   context 'Scope' do

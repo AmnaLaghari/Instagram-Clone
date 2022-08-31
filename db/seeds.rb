@@ -60,5 +60,5 @@ Story.create(user_id: u3.id) do |story|
   story.images.attach(io: File.open('app/assets/images/user.png'), filename: 'p2.jpeg')
 end
 
-# r1 = Relationship.create!(follower_id: u1.id, followee_id: u2.id)
-# r1.save!
+r1 = Relationship.create!(follower_id: u1.id, followee_id: u2.id)
+r1.save!

@@ -5,22 +5,10 @@ require 'spec_helper'
 require 'devise'
 
 RSpec.describe 'PostsControllers', type: :request do
-  let(:user) do
-    User.create(username: Faker::Name.unique.name, full_name: Faker::Name.name, email: Faker::Internet.email,
-                password: Faker::Internet.password(min_length: 6), privacy: 'Private')
-  end
-  let(:post1) do
-    Post.create(user_id: user.id, caption: Faker::Lorem.sentence,
-                images: [fixture_file_upload(Rails.root.join('spec/fixtures/home4.png'), 'image/png')])
-  end
-  let(:user2) do
-    User.create(username: Faker::Name.unique.name, full_name: Faker::Name.name, email: Faker::Internet.email,
-                password: Faker::Internet.password(min_length: 6), privacy: 'Private')
-  end
-  let(:post2) do
-    Post.create(user_id: user2.id, caption: Faker::Lorem.sentence,
-                images: [fixture_file_upload(Rails.root.join('spec/fixtures/home4.png'), 'image/png')])
-  end
+  let(:user) { create(:user) }
+  let(:post1) { create(:post, user: user) }
+  let(:user2) { create(:user) }
+  let(:post2) { create(:post, user: user2) }
 
   before(:each) do
     user.skip_confirmation!
@@ -54,7 +42,6 @@ RSpec.describe 'PostsControllers', type: :request do
       sign_out user
       get edit_post_path(post1.id)
 
-      expect(response).to have_http_status(302)
       follow_redirect!
       expect(response.body).to include('You need to sign in or sign up before continuing.')
     end
@@ -65,7 +52,6 @@ RSpec.describe 'PostsControllers', type: :request do
       sign_in user2
       get edit_post_path(post1.id)
 
-      expect(response).to have_http_status(302)
       follow_redirect!
       expect(flash[:notice]).to eq('You are not authorized to perform this action.')
     end
@@ -99,7 +85,6 @@ RSpec.describe 'PostsControllers', type: :request do
       sign_out user
       get post_path(post1.id)
 
-      expect(response).to have_http_status(302)
       follow_redirect!
       expect(response.body).to include('You need to sign in or sign up before continuing.')
     end
@@ -129,17 +114,14 @@ RSpec.describe 'PostsControllers', type: :request do
           params: { post: { user_id: post1.user_id, caption: post1.caption, images: post1.images } }
       follow_redirect!
 
-      expect(response).to have_http_status(302)
       expect(flash[:notice]).to eql('post was successfully updated.')
     end
 
     it 'should not update as params are not correct' do
-      patch "/posts/#{post1.id}", params: { post: { user_id: user2.id } }
-
-      expect(response).to have_http_status(302)
-      follow_redirect!
+      patch "/posts/#{post1.id}", params: { post: { user_id: 67 } }
+      post1.update(user_id: 67)
       expect(flash[:notice]).to eql("Post was not successfully updated. Please try again.
-        #{post1.errors.full_messages.to_sentence} ")
+                  #{post1.errors.full_messages.to_sentence} ")
     end
 
     it 'should not update post as signed in user is not creator of post' do
@@ -149,7 +131,6 @@ RSpec.describe 'PostsControllers', type: :request do
       put "/posts/#{post1.id}", params: { post: { user_id: user2.id } }
       follow_redirect!
 
-      expect(response).to have_http_status(302)
       expect(flash[:notice]).to eql('You are not authorized to perform this action.')
     end
   end
@@ -158,7 +139,6 @@ RSpec.describe 'PostsControllers', type: :request do
     it 'should destroy as parmas are correct and signed in user is the ceeator of post' do
       delete "/posts/#{post1.id}", params: { post: { user_id: post1.user_id } }
 
-      expect(response).to have_http_status(302)
       follow_redirect!
       expect(flash[:notice]).to eql('Post was successfully deleted.')
     end

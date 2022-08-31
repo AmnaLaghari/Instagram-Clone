@@ -3,15 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe Story, type: :model do
-  let(:user) do
-    User.create(username: Faker::Name.unique.name, full_name: Faker::Name.name, email: Faker::Internet.email,
-                password: Faker::Internet.password(min_length: 6), privacy: 'Private')
-  end
-
-  let(:story) do
-    Story.create(user_id: user.id,
-                 images: [fixture_file_upload(Rails.root.join('spec/fixtures/home4.png'),
-                                              'image/png')])
+  let(:user) { create(:user) }
+  let(:story) { create(:story, user: user) }
+  let(:story2) do
+    build(:story, user: user, images: [fixture_file_upload(
+      Rails.root.join('spec/fixtures/Alchemist.webp'), 'image/png'
+    )])
   end
 
   context 'Associations' do
@@ -27,6 +24,14 @@ RSpec.describe Story, type: :model do
     it 'is not valid as it doesnt have image' do
       expect(Story.new).not_to be_valid
     end
+
+    it 'Image is valid as its type valid(png)' do
+      expect(story).to be_valid
+    end
+
+    it 'Image is invalid as its type invalid(webp)' do
+      expect(story2).to_not be_valid
+    end
   end
 
   context 'Scope' do
@@ -37,12 +42,7 @@ RSpec.describe Story, type: :model do
 
   context 'Delete story' do
     it 'should create story' do
-      s1 = Story.create(user_id: user.id,
-                        images: [fixture_file_upload(
-                          Rails.root.join('spec/fixtures/home4.png'), 'image/png'
-                        )])
-
-      expect { DeleteStoriesJob.set(wait: 1.day).perform_later(s1.id) }.to have_enqueued_job.with(s1.id)
+      expect { DeleteStoriesJob.set(wait: 1.day).perform_later(story.id) }.to have_enqueued_job.with(story.id)
     end
   end
 end
