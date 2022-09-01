@@ -17,7 +17,7 @@ class User < ApplicationRecord
   has_many :stories, dependent: :destroy
 
   validates :username, :full_name, :privacy, presence: true
-  validates :username, uniqueness: true
+  validates :username, uniqueness: { case_sensitive: false }
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable
@@ -31,12 +31,12 @@ class User < ApplicationRecord
   def accept_request(user)
     ActiveRecord::Base.transaction do
       if following_users.create!(follower_id: user.id)
-        user.sent_requests.find_by(reciever_id: id).destroy
+        user.sent_requests.find_by(reciever_id: id).destroy!
         return true
       end
     end
   rescue ActiveRecord::RecordInvalid
-    errors[:base] << 'something went wrong'
+    errors[:base] << user.errors.to_s
   end
 
   def delete_request(user)

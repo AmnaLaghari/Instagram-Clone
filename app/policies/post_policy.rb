@@ -8,6 +8,10 @@ class PostPolicy < ApplicationPolicy
     user_exist?
   end
 
+  def new?
+    user_exist?
+  end
+
   def show?
     user_exist? && record_not_nil? && (@user.following?(@record.user) || !check_private? || @user == @record.user)
   end

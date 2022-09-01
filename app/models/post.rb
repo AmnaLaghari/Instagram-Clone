@@ -6,7 +6,7 @@ class Post < ApplicationRecord
   has_many_attached :images, dependent: :destroy
   has_many :likes, dependent: :destroy
 
-  validates :images, length: { minimum: 0, maximum: 10, message: 'can not exceed 10 per post.' }
+  validates :images, length: { minimum: 1, maximum: 10, message: 'can not exceed 10 per post.' }
   validate :correct_image_type
 
   private

@@ -9,3 +9,10 @@ production:
   api_key: <%= Rails.application.credentials.fetch(:api_key)%>
   api_secret: <%= Rails.application.credentials.fetch(:api_secret)%>
   secure: <%= Rails.application.credentials.fetch(:secure)%>
+
+test:
+  cloud_name: <%= Rails.application.credentials.fetch(:cloud_name)%>
+  api_key: <%= Rails.application.credentials.fetch(:api_key)%>
+  api_secret: <%= Rails.application.credentials.fetch(:api_secret)%>
+  secure: <%= Rails.application.credentials.fetch(:secure)%>
+

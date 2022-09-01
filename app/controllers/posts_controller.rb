@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[edit update destroy]
-  before_action :private_user, only: %i[show]
+  before_action :set_post, only: %i[show edit update destroy]
   after_action :verify_authorized
 
   def index
@@ -33,8 +32,9 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to post_url(@post), notice: 'Post was successfully created.'
     else
-      render :new, status: :unprocessable_entity,
-                   notice: "Post was not created due to some issue. Please try again. #{@post.errors} "
+      redirect_to new_post_path,
+                  notice: "Post was not created due to some issue. Please try again.
+                  #{@post.errors.full_messages.to_sentence} ", status: :unprocessable_entity
     end
   end
 
@@ -42,20 +42,13 @@ class PostsController < ApplicationController
     if @post.update(post_params)
       redirect_to post_url(@post), notice: 'post was successfully updated.'
     else
-      render :edit, status: :unprocessable_entity,
-                    notice: "Post was not successfully updated. Please try again. #{@post.errors} "
+      redirect_to edit_post_path,
+                  notice: "Post was not successfully updated. Please try again.
+                  #{@post.errors.full_messages.to_sentence} ", status: :unprocessable_entity
     end
   end
 
   private
-
-  def private_user
-    set_post
-    @user = User.find(@post.user_id)
-    return unless current_user != @user && (@user.privacy == 'Private' && !current_user.following?(@user))
-
-    redirect_to user_path(@user.id), notice: 'This user is private you cannot view their post.'
-  end
 
   def set_post
     @post = Post.find(params[:id])

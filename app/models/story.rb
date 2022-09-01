@@ -6,8 +6,8 @@ class Story < ApplicationRecord
   belongs_to :user
   has_many_attached :images, dependent: :destroy
 
-  validate :correct_image_type
   validates :images, presence: true
+  validate :correct_image_type
 
   scope :user_stories, ->(id) { where(user_id: id) }
 
@@ -22,7 +22,7 @@ class Story < ApplicationRecord
 
     images.each do |image|
       unless image.content_type.in?(%w[image/jpeg image/png image/gif image/jpg])
-        errors[:base] << 'You tried uploading which is not jped/jpg/png.gif'
+        errors[:base] << 'You tried uploading which is not jpeg/jpg/png/gif'
       end
     end
   end
