@@ -31,9 +31,7 @@ RSpec.describe 'UsersControllers', type: :request do
 
   describe 'User/show' do
     it 'Should show single user as user is signed in' do
-      get user_path(user.id),
-          params: { user: { username: user.username, full_name: user.full_name, email: user.email,
-                            password: user.password, privacy: user.privacy } }
+      get user_path(user.id)
 
       expect(response).to have_http_status(200)
     end
@@ -41,8 +39,6 @@ RSpec.describe 'UsersControllers', type: :request do
     it 'Should not show single user as user is not signed in' do
       sign_out user
       get user_path(user.id),
-          params: { user: { username: user.username, full_name: user.full_name, email: user.email,
-                            password: user.password, privacy: user.privacy } }
 
       expect(response).to have_http_status(302)
       follow_redirect!
