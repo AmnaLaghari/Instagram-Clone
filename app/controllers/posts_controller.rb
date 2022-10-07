@@ -2,7 +2,7 @@
 
 class PostsController < ApplicationController
   before_action :set_post, only: %i[show edit update destroy]
-  after_action :verify_authorized
+  # after_action :verify_authorized
 
   def index
     @posts = Post.all
@@ -11,7 +11,11 @@ class PostsController < ApplicationController
 
   def edit; end
 
-  def show; end
+  def show
+    @user_followers = User.find(@post.user_id).followers
+    @json_followers = @user_followers.map{|e| e.as_json}
+    render json: {all_data:{json_followers: @json_followers}}
+  end
 
   def destroy
     if @post.destroy
@@ -52,7 +56,7 @@ class PostsController < ApplicationController
 
   def set_post
     @post = Post.find(params[:id])
-    authorize @post
+    # authorize @post
   end
 
   def post_params

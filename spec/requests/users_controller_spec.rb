@@ -38,7 +38,7 @@ RSpec.describe 'UsersControllers', type: :request do
 
     it 'Should not show single user as user is not signed in' do
       sign_out user
-      get user_path(user.id),
+      get user_path(user.id)
 
       expect(response).to have_http_status(302)
       follow_redirect!

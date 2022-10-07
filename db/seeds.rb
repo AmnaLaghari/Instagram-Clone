@@ -62,3 +62,10 @@ end
 
 r1 = Relationship.create!(follower_id: u1.id, followee_id: u2.id)
 r1.save!
+r2 = Relationship.create!(follower_id: u2.id, followee_id: u1.id)
+r2.save!
+r3 = Relationship.create!(follower_id: u1.id, followee_id: u3.id)
+r3.save!
+r4 = Relationship.create!(follower_id: u3.id, followee_id: u1.id)
+r4.save!
+

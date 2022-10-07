@@ -51,6 +51,7 @@ RSpec.describe Post, type: :model do
     end
 
     it 'Image is invalid as its type invalid(webp)' do
+      byebug
       expect(post4).to_not be_valid
     end
   end

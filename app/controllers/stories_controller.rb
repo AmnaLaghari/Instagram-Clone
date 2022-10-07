@@ -3,24 +3,26 @@
 class StoriesController < ApplicationController
   before_action :set_story, only: %i[show destroy]
   before_action :set_user, only: %i[index new show destroy create]
-  after_action :verify_authorized
+  # after_action :verify_authorized
   before_action :check_user, only: [:new]
 
   def index
-    @stories = Story.all.user_stories(params[:user_id])
-    authorize @stories
+    @stories = Story.all
+    @json_stories = @stories.map { |e| e.as_json.merge(images: e.images.map { |image| url_for(image) }) }
+    render json: {all_data:{json_stories: @json_stories}}
+    # authorize @stories
   end
 
   def new
     @story = Story.new
-    authorize @story
+    # authorize @story
   end
 
   def show; end
 
   def create
     @story = @user.stories.new(story_params)
-    authorize @story
+    # authorize @story
     if @story.save
       redirect_to users_url, notice: 'story is successfuly created'
     else
@@ -44,7 +46,7 @@ class StoriesController < ApplicationController
 
   def set_story
     @story = Story.find(params[:id])
-    authorize @story
+    # authorize @story
   end
 
   def set_user
